@@ -4,7 +4,7 @@ function Search(props) {
   const { searchFunction, value } = props;
   return (
     <label>
-      Search Foods
+      Search Item :
       <input
         type="text"
         name="search"

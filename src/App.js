@@ -8,11 +8,17 @@ import axios from "axios";
 // import SearchField from "react-search-field";
 import Search from "./components/SearchBar";
 
+import ProductList from "./components/ProductList.js";
+
+
+
+
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myproducts: products,
+      myproducts: ProductList,
       currentUser: null,
       searchString: ""
     };
@@ -46,7 +52,7 @@ class App extends Component {
 
   handleSearch(event) {
     const { value } = event.target;
-    const filteredArray = products.filter(oneProduct =>
+    const filteredArray = ProductList.filter(oneProduct =>
       oneProduct.name.toLowerCase().includes(value.toLowerCase())
     );
     this.setState({ searchString: value, myproducts: filteredArray });
@@ -62,6 +68,8 @@ class App extends Component {
             <NavLink exact to="/">
               Home
             </NavLink>
+            <NavLink to="/product-list-man">Man</NavLink>
+            <NavLink to="/product-list-women">Women</NavLink>
             {this.state.currentUser ? (
               <span>
                 <b>{this.state.currentUser.fullName}</b>
@@ -86,6 +94,8 @@ class App extends Component {
           className="test-class"
         /> */}
         <Switch>
+            <Route path="/product-list-man"  render={()=><ProductList category="man"/>}/>
+            <Route path="/product-list-women"  render={()=><ProductList category="women"/>}/>
           <Route
             path="/signup-page"
             render={() => {
@@ -93,9 +103,9 @@ class App extends Component {
                 <SignUpPage
                   currentUser={this.state.currentUser}
                   onUserChange={userDoc => this.syncCurrentUser(userDoc)}
-                />
-              );
-            }}
+                  />
+                  );
+                }}
           />
 
           <Route
@@ -103,7 +113,7 @@ class App extends Component {
             render={() => {
               return (
                 <LoginPage
-                  currentUser={this.state.currentUser}
+                currentUser={this.state.currentUser}
                   onUserChange={userDoc => this.syncCurrentUser(userDoc)}
                 />
               );
