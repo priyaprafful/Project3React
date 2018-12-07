@@ -27,9 +27,7 @@ class ProductList extends Component {
       }
     });
     console.log(filteredProducts);
-    // this.setState({
-    //   filteredProducts
-    // });
+    this.props.syncFilteredArray(filteredProducts);
   }
   sortByPriceDsc() {
     const { filteredProducts } = this.props;
@@ -46,9 +44,7 @@ class ProductList extends Component {
       }
     });
     console.log(filteredProducts);
-    // this.setState({
-    //   filteredProducts
-    // });
+    this.props.syncFilteredArray(filteredProducts);
   }
 
   render() {
@@ -56,8 +52,12 @@ class ProductList extends Component {
     return (
       <section>
         <h1>Choose your product</h1>
-        <button onClick={this.sortByPriceDsc}>lowest To highest price</button>
-        <button onClick={this.sortByPriceAsc}>highest To lowest price</button>
+        <button onClick={event => this.sortByPriceDsc(event)}>
+          lowest To highest price
+        </button>
+        <button onClick={event => this.sortByPriceAsc(event)}>
+          highest To lowest price
+        </button>
         <ul>
           {filteredProducts.map(oneProduct => {
             return (

@@ -50,6 +50,10 @@ class App extends Component {
     this.setState({ currentUser: userDoc });
   }
 
+  syncFilteredArray = filteredArray => {
+    this.setState({ filteredProducts: filteredArray });
+  };
+
   changeGender(gender) {
     // event.preventDefault();
     console.log("change gender called", gender);
@@ -114,19 +118,26 @@ class App extends Component {
                 handleSearch={event => this.handleSearch(event)}
                 searchString={this.state.searchString}
                 filteredProducts={this.state.filteredProducts}
+                syncFilteredArray={this.syncFilteredArray}
               />
             )}
           />
           <Route
             path="/product-list-man"
             render={() => (
-              <ProductList filteredProducts={this.state.filteredProducts} />
+              <ProductList
+                filteredProducts={this.state.filteredProducts}
+                syncFilteredArray={this.syncFilteredArray}
+              />
             )}
           />
           <Route
             path="/product-list-women"
             render={() => (
-              <ProductList filteredProducts={this.state.filteredProducts} />
+              <ProductList
+                filteredProducts={this.state.filteredProducts}
+                syncFilteredArray={this.syncFilteredArray}
+              />
             )}
           />
           <Route

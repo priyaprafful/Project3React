@@ -21,7 +21,10 @@ class HomePage extends Component {
           value={this.props.searchString}
         />
         {this.props.searchString ? (
-          <ProductList filteredProducts={this.props.filteredProducts} />
+          <ProductList
+            filteredProducts={this.props.filteredProducts}
+            syncFilteredArray={this.props.syncFilteredArray}
+          />
         ) : (
           <div>
             <div>
