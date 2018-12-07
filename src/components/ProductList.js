@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import FilterProduct from "../components/FilterProduct.js";
 
 
 
@@ -95,6 +96,7 @@ class ProductList extends Component {
         return ( 
             <section>
                 <h1>Choose your product</h1>
+                <FilterProduct/>
                 <button onClick = {this.sortByPriceDsc}>lowest To highest price</button>
                 <button onClick = {this.sortByPriceAsc}>highest To lowest price</button>
                  <ul>
@@ -105,7 +107,7 @@ class ProductList extends Component {
                               <p>{oneProduct.price}</p>
                               <p>{oneProduct.name}</p>
                               <p>{oneProduct.brand}</p>
-                              <button onClick={()=>this.addToCart(oneProduct._id)}>Add to cart</button>
+                            <button onClick={()=>this.addToCart(oneProduct._id)}>Add to cart</button>
                              
                             </li>
                         )
