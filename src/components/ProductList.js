@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import axios from "axios";
 
 
+
+
 class ProductList extends Component {
     constructor(props) {
         super(props);
@@ -9,7 +11,10 @@ class ProductList extends Component {
             productArray:[],
             filteredProducts:[],
             category:"",
-         }
+           }
+           this.sortByPriceAsc=this.sortByPriceAsc.bind(this)
+           this.sortByPriceDsc=this.sortByPriceDsc.bind(this)
+
     }
     componentDidMount(){
         axios.get("http://localhost:5555/api/products")
@@ -49,14 +54,50 @@ class ProductList extends Component {
 
     addToCart(productId){
         console.log("productId",productId);
-        
+        axios.get("http://localhost:5555/api/addtocart/productId")
+     }
+   
+     
+     sortByPriceAsc(){
+        const { filteredProducts} = this.state;
+         console.log(filteredProducts);
+         filteredProducts.sort((a,b)=>{
+            if (a.price < b.price)//sort string ascending
+              { return 1}
+            if (a.price > b.price)
+               {return -1}
+            else {return 0}  
+         })
+         console.log(filteredProducts);
+          this.setState({
+            filteredProducts
+         })
     }
+     sortByPriceDsc(){
+        const { filteredProducts} = this.state;
+        console.log(filteredProducts);
+        filteredProducts.sort((a,b)=>{
+           if (a.price > b.price)//sort string ascending
+             { return 1}
+           if (a.price < b.price)
+              {return -1}
+           else {return 0}  
+        })
+        console.log(filteredProducts);
+         this.setState({
+           filteredProducts
+        })
+    }
+       
+   
     render() { 
         const{filteredProducts}= this.state;
         return ( 
             <section>
                 <h1>Choose your product</h1>
-                  <ul>
+                <button onClick = {this.sortByPriceDsc}>lowest To highest price</button>
+                <button onClick = {this.sortByPriceAsc}>highest To lowest price</button>
+                 <ul>
                       {filteredProducts.map(oneProduct=>{
                           return(
                             <li key={oneProduct._id}>

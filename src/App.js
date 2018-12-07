@@ -6,7 +6,7 @@ import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
 import axios from "axios";
 // import SearchField from "react-search-field";
-import Search from "./components/SearchBar";
+//import Search from "./components/SearchBar";
 
 import ProductList from "./components/ProductList.js";
 
@@ -50,16 +50,16 @@ class App extends Component {
       });
   }
 
-  handleSearch(event) {
-    const { value } = event.target;
-    const filteredArray = ProductList.filter(oneProduct =>
-      oneProduct.name.toLowerCase().includes(value.toLowerCase())
-    );
-    this.setState({ searchString: value, myproducts: filteredArray });
-  }
+  // handleSearch(event) {
+  //   const { value } = event.target;
+  //   const filteredArray = ProductList.filter(oneProduct =>
+  //     oneProduct.name.toLowerCase().includes(value.toLowerCase())
+  //   );
+  //   this.setState({ searchString: value, myproducts: filteredArray });
+  // }
 
   render() {
-    const { searchString } = this.state;
+    // const { searchString } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -83,10 +83,10 @@ class App extends Component {
             )}
           </nav>
         </header>
-        <Search
+        {/* <Search
           searchFunction={event => this.handleSearch(event)}
           value={searchString}
-        />
+        /> */}
         {/* <SearchField
           placeholder="Search..."
           onEnter={onEnter}
