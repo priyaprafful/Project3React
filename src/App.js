@@ -7,6 +7,7 @@ import LoginPage from "./components/LoginPage";
 import axios from "axios";
 // import SearchField from "react-search-field";
 //import Search from "./components/SearchBar";
+
 import ProductList from "./components/ProductList.js";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
@@ -104,16 +105,7 @@ class App extends Component {
             changeGender={gender => this.changeGender(gender)}
           />
         </header>
-        {/* <Search
-          searchFunction={event => this.handleSearch(event)}
-          value={searchString}
-        /> */}
-        {/* <SearchField
-          placeholder="Search..."
-          onEnter={onEnter}
-          searchText="This is initial search text"
-          className="test-class"
-        /> */}
+
         <Switch>
           <Route
             path="/home"

@@ -7,50 +7,48 @@ function getPhoneUrl(oneProduct) {
 }
 
 class ProductList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      //   productArray: [],
-      //   filteredProducts: [],
-      //   category: ""
-    };
-  }
-  componentDidMount() {
-    // axios
-    //   .get("http://localhost:5555/api/products")
-    //   .then(response => {
-    //     //console.log("Product-List",response.data)
-    //     const filteredProducts = response.data.filter(filterbygender => {
-    //       return filterbygender.category === this.props.category;
-    //     });
-    //     this.setState({
-    //       filteredProducts: filteredProducts,
-    //       productArray: response.data,
-    //       category: this.props.category
-    //     });
-    //   })
-    //   .catch(err => {
-    //     console.log("ProductList Error", err);
-    //   });
-  }
-
-  //static getDerivedStateFromProps(nextProps, prevState) {
-  // // console.log('nextProps,', nextProps, 'prevState,', prevState)
-  // if (nextProps.category !== prevState.category) {
-  //   const { productArray } = prevState;
-  //   const filteredArray = productArray.filter(filterbygender => {
-  //     return filterbygender.category === nextProps.category;
-  //   });
-  //   return {
-  //     filteredProducts: filteredArray,
-  //     category: nextProps.category
-  //   };
-  // }
-  // return null;
-  //}
-
   addToCart(productId) {
     console.log("productId", productId);
+    axios.get("http://localhost:5555/api/addtocart/productId");
+  }
+
+  sortByPriceAsc() {
+    const { filteredProducts } = this.props;
+    console.log(filteredProducts);
+    filteredProducts.sort((a, b) => {
+      if (a.price < b.price) {
+        //sort string ascending
+        return 1;
+      }
+      if (a.price > b.price) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    console.log(filteredProducts);
+    // this.setState({
+    //   filteredProducts
+    // });
+  }
+  sortByPriceDsc() {
+    const { filteredProducts } = this.props;
+    console.log(filteredProducts);
+    filteredProducts.sort((a, b) => {
+      if (a.price > b.price) {
+        //sort string ascending
+        return 1;
+      }
+      if (a.price < b.price) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    console.log(filteredProducts);
+    // this.setState({
+    //   filteredProducts
+    // });
   }
 
   render() {
@@ -58,6 +56,8 @@ class ProductList extends Component {
     return (
       <section>
         <h1>Choose your product</h1>
+        <button onClick={this.sortByPriceDsc}>lowest To highest price</button>
+        <button onClick={this.sortByPriceAsc}>highest To lowest price</button>
         <ul>
           {filteredProducts.map(oneProduct => {
             return (

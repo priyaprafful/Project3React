@@ -35,11 +35,3 @@ class Search extends Component {
 }
 
 export default Search;
-
-// function Search(props) {
-// console.log(props);
-//   return (
-//   );
-// }
-
-// export default Search;
