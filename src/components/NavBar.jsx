@@ -5,8 +5,7 @@ import MyCart from "../components/MyCart"
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {loggedInUser: null};
-    
+    this.state = {loggedInUser: this.props.currentUser};
   }
   render() {
     return (
@@ -28,14 +27,20 @@ class NavBar extends Component {
             >
               Women
             </NavLink>
-            { this.props.currentUser ? 
+            {/* { this.props.currentUser ? 
               [
-                <MyCart loggedInUser={this.props.currentUser}></MyCart>
+                <MyCart loggedInUser={this.props.currentUser}
+                
+                ></MyCart>
               ]
-            : null }
+            : null } */}
+
             {this.props.currentUser ? (
               
               <span>
+                <NavLink 
+                  to="/showcart">Mycart -{this.props.productAmount}
+                </NavLink>
                 <b>{this.props.currentUser.fullName}</b>
                 <button onClick={() => this.props.logoutClick()}>
                   LOG OUT

@@ -30,22 +30,6 @@ class ProductList extends Component {
     .catch(function (error) {
       console.log(error);
     });
-    
-    
-    
-    // var jsonString = '{'
-    //    +'"productID":"'+productId+'",'
-    //    +'"userId"  : "test"'
-    //    +'}';
-    // fetch("http://localhost:5555/api/addtocart/",{
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json; charset=utf-8",
-    //     },
-    //     body: jsonString
-    // }).then(function (response) {
-    //     return response.json();
-    // });
   }
   
   

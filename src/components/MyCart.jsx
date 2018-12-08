@@ -33,7 +33,7 @@ class MyCart extends Component {
     render() { 
         return ( 
             <section>
-                <h1>my cart({this.state.productAmount})</h1>
+                <h1 onClick="/showcart">my cart {this.state.productAmount}</h1>
             </section>
          );
     }

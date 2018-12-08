@@ -12,6 +12,7 @@ import ProductList from "./components/ProductList";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/ProductDetails";
+import ShowCart from "./components/ShowCart";
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class App extends Component {
       productArray: [],
       category: "women",
       selecteCheckBox:[],
+      productAmount: 0
     };
   }
   componentDidMount() {
@@ -33,6 +35,7 @@ class App extends Component {
         console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
+        this.getNumberOfProducts(userDoc);
         return axios.get("http://localhost:5555/api/products");
       })
       .then(response => {
@@ -45,6 +48,9 @@ class App extends Component {
         console.log("CHECK USER ERROR or product List error", err);
         alert("Sorry!Something went wrong");
       });
+
+      console.log("user is set after mount :::::", this.state.currentUser);
+      
   }
 
   syncCurrentUser(userDoc) {
@@ -90,6 +96,27 @@ class App extends Component {
     });
   }
 
+  getNumberOfProducts(userDoc){
+    var numbers  =0;
+    console.log("inside getNumberOfProducts()", this.state.currentUser);
+    axios.post("http://localhost:5555/api/myproducts",
+           { },
+           { withCredentials: true }).then((response) => {
+    // axios.post("http://localhost:5555/api/myproducts",
+    //     { loggedInUser: userDoc },
+    //     { withCredentials: true }).then(response=> {
+            numbers  = response.data.numbers;
+            console.log("numberof products in app  :::::::::", numbers);
+            //console.log("number of products in mycart compomemt :::::", response.data['numbers']);
+            this.setState({productAmount:numbers});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      //console.log("numbers  ::::", numbers);
+      //return numbers;
+    }
+
   logoutClick() {
     axios
       .delete("http://localhost:5555/api/logout", { withCredentials: true })
@@ -128,6 +155,7 @@ class App extends Component {
           <h1>Project 3</h1>
           <NavBar
             currentUser={currentUser}
+            productAmount={this.state.productAmount}
             logoutClick={() => this.logoutClick()}
             changeGender={gender => this.changeGender(gender)}
           />
@@ -183,7 +211,16 @@ class App extends Component {
               );
             }}
           />
-
+          <Route
+            path="/showcart"
+            render={() => {
+              return (
+                <ShowCart
+                  currentUser={currentUser}
+                />
+              );
+            }}
+          />
           <Route
             path="/login-page"
             render={() => {

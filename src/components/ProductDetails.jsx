@@ -9,12 +9,14 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const { params } = this.props.match;
+    console.log("inside mount");
     axios
       .get(`http://localhost:5555/api/products/${params.productId}`, {
+    
         withCredentials: true
       })
       .then(response => {
-        console.log("Pone Details", response.data);
+        console.log("Product Details", response.data);
         this.setState(response.data);
       })
       .catch(err => {
@@ -22,9 +24,9 @@ class ProductDetails extends Component {
         alert("Sorry! Something went wrong.");
       });
   }
-
+  
   render() {
-    const { image, name, brand, price, size, description } = this.state;
+    const { _id,image, name, brand, price, size, description } = this.state;
     return (
       <section className="ProductDetails">
         <h3>Product Details</h3>
@@ -35,7 +37,7 @@ class ProductDetails extends Component {
         </p>
         <b>€{price}</b>
         <h4>{size}</h4>
-        <button>Add to Cart</button>
+        <button onClick={() => this.addToCart(_id)}>Add to cart</button>
         <p>{description}</p>
       </section>
     );
