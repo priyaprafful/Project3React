@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import MyCart from "../components/MyCart"
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {loggedInUser: null};
+    
   }
   render() {
     return (
@@ -26,7 +28,13 @@ class NavBar extends Component {
             >
               Women
             </NavLink>
+            { this.props.currentUser ? 
+              [
+                <MyCart loggedInUser={this.props.currentUser}></MyCart>
+              ]
+            : null }
             {this.props.currentUser ? (
+              
               <span>
                 <b>{this.props.currentUser.fullName}</b>
                 <button onClick={() => this.props.logoutClick()}>

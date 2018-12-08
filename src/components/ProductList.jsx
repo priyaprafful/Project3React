@@ -8,11 +8,47 @@ function getPhoneUrl(oneProduct) {
 }
 
 class ProductList extends Component {
+    
+    constructor(props) {
+        console.log("props :::",props);
+        super(props);
+        this.state = {};
+    }    
+
+
   addToCart(productId) {
     console.log("productId", productId);
-    axios.get("http://localhost:5555/api/addtocart/productId");
+    //console.log("props are :::::",this.props);
+    console.log("user   ", this.props.currentUser);
+    //axios.post("http://localhost:5555/api/addtocart/"+productId+"/"+this.props.currentUser.email);
+    axios.post("http://localhost:5555/api/addtocart",{
+      key: productId,
+      user: this.props.currentUser
+    }).then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+    
+    
+    // var jsonString = '{'
+    //    +'"productID":"'+productId+'",'
+    //    +'"userId"  : "test"'
+    //    +'}';
+    // fetch("http://localhost:5555/api/addtocart/",{
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json; charset=utf-8",
+    //     },
+    //     body: jsonString
+    // }).then(function (response) {
+    //     return response.json();
+    // });
   }
-
+  
+  
   sortByPriceAsc() {
     const { filteredProducts } = this.props;
     console.log(filteredProducts);
@@ -53,7 +89,7 @@ class ProductList extends Component {
     return (
       <section>
         <h1>Choose your product</h1>
-        <FilterProduct/>
+        <FilterProduct syncSelectCheckBox={this.props.syncSelectCheckBox}/>
         <button onClick={event => this.sortByPriceDsc(event)}>
           lowest To highest price
         </button>
@@ -64,6 +100,7 @@ class ProductList extends Component {
           {filteredProducts.map(oneProduct => {
             return (
               <li key={oneProduct._id}>
+              
                 <Link to={getPhoneUrl(oneProduct)}>
                   <img src={oneProduct.image} alt={oneProduct.name} />
                 </Link>

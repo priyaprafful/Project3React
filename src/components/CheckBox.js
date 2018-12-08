@@ -10,6 +10,7 @@ class CheckBox extends Component {
           <input
             type="checkbox"
             value={label}
+            onChange={() => this.props.syncSelectCheckBox(label)}
             />
             <span className="checkMark">{label}</span>
         </label>

@@ -8,7 +8,7 @@ import axios from "axios";
 // import SearchField from "react-search-field";
 //import Search from "./components/SearchBar";
 
-import ProductList from "./components/ProductList.js";
+import ProductList from "./components/ProductList";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/ProductDetails";
@@ -22,7 +22,8 @@ class App extends Component {
       searchString: "",
       filteredProducts: [],
       productArray: [],
-      category: "women"
+      category: "women",
+      selecteCheckBox:[],
     };
   }
   componentDidMount() {
@@ -53,6 +54,28 @@ class App extends Component {
   syncFilteredArray = filteredArray => {
     this.setState({ filteredProducts: filteredArray });
   };
+  
+  syncSelectCheckBox=oneSIZE=>{
+    const {selecteCheckBox} = this.state;
+    const selecteCheckBoxCopy=[...selecteCheckBox];
+    selecteCheckBoxCopy.push(oneSIZE)
+    const newFilteredArray= this.filterSize() 
+    this.setState({
+      selecteCheckBox:selecteCheckBoxCopy,
+      filteredProducts: newFilteredArray
+    })
+  }
+
+  filterSize(){
+    const {selecteCheckBox, productArray} = this.state;
+    const selectSize = productArray.filter( oneProduct => {
+      return oneProduct.size.some(function(onesize){
+        return selecteCheckBox.includes(onesize)
+      } )
+    })
+    console.log(selectSize)
+    return selectSize;
+  }
 
   changeGender(gender) {
     // event.preventDefault();
@@ -119,6 +142,7 @@ class App extends Component {
                 searchString={this.state.searchString}
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
+                syncSelectCheckBox={this.syncSelectCheckBox}
               />
             )}
           />
@@ -126,8 +150,10 @@ class App extends Component {
             path="/product-list-man"
             render={() => (
               <ProductList
+                currentUser={currentUser}
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
+                syncSelectCheckBox={this.syncSelectCheckBox}
               />
             )}
           />
@@ -135,8 +161,10 @@ class App extends Component {
             path="/product-list-women"
             render={() => (
               <ProductList
+                currentUser={currentUser}
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
+                syncSelectCheckBox={this.syncSelectCheckBox}
               />
             )}
           />
