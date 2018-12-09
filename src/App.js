@@ -27,6 +27,7 @@ class App extends Component {
       selecteCheckBox:[],
       cartProductNumbers: 0,
       productData:[],
+      cartTotal : 0
     };
   }
   componentDidMount() {
@@ -108,6 +109,10 @@ class App extends Component {
         this.setState({productData:result});
         console.log("prodcts data    ::::", this.state.productData);
         this.setState({cartProductNumbers:response.data.numbers});
+        console.log("cart total before set is ::::: ",this.state.cartTotal)
+        this.setState({cartTotal:response.data.cartTotal});
+        console.log("cart total after set is ::::: ",this.state.cartTotal)
+        
       }).catch(function (error) {
         console.log(error);
       });
@@ -143,7 +148,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser,productData } = this.state;
+    const { currentUser,productData, cartTotal } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -212,6 +217,7 @@ class App extends Component {
                 <ShowCart
                   currentUser={currentUser}
                   productData = {productData}
+                  cartTotal = {cartTotal}
                 />
               );
             }}

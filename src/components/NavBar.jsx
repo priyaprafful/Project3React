@@ -27,14 +27,6 @@ class NavBar extends Component {
             >
               Women
             </NavLink>
-            {/* { this.props.currentUser ? 
-              [
-                <MyCart loggedInUser={this.props.currentUser}
-                
-                ></MyCart>
-              ]
-            : null } */}
-
             {this.props.currentUser ? (
               
               <span>

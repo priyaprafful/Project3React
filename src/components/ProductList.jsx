@@ -93,7 +93,7 @@ class ProductList extends Component {
             return (
               <li key={oneProduct._id}>
               
-                <Link to={getPhoneUrl(oneProduct)}>
+                <Link to={getPhoneUrl(oneProduct)} >
                   <img src={oneProduct.image} alt={oneProduct.name} />
                 </Link>
                 <p>{oneProduct.price}</p>
