@@ -29,16 +29,14 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    axios
-      .get("http://localhost:5555/api/checkuser", { withCredentials: true })
+    axios.get("http://localhost:5555/api/checkuser", { withCredentials: true })
       .then(response => {
         console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
         this.getNumberOfProducts(userDoc);
         return axios.get("http://localhost:5555/api/products");
-      })
-      .then(response => {
+      }).then(response => {
         //console.log("Product-List",response.data)
         this.setState({
           productArray: response.data
@@ -97,34 +95,31 @@ class App extends Component {
   }
 
   getNumberOfProducts(userDoc){
-    var numbers  =0;
+    var numbers = 0;
     console.log("inside getNumberOfProducts()", this.state.currentUser);
-    axios.post("http://localhost:5555/api/myproducts",
-           { },
-           { withCredentials: true }).then((response) => {
+    axios.post("http://localhost:5555/api/myproducts",{ },{ withCredentials: true })
+      .then((response) => {
     // axios.post("http://localhost:5555/api/myproducts",
     //     { loggedInUser: userDoc },
     //     { withCredentials: true }).then(response=> {
-            numbers  = response.data.numbers;
-            console.log("numberof products in app  :::::::::", numbers);
-            //console.log("number of products in mycart compomemt :::::", response.data['numbers']);
-            this.setState({productAmount:numbers});
-      })
-      .catch(function (error) {
+        numbers  = response.data.numbers;
+        console.log("numberof products in app  :::::::::", numbers);
+        //console.log("number of products in mycart compomemt :::::", response.data['numbers']);
+        this.setState({productAmount:numbers});
+      }).catch(function (error) {
         console.log(error);
       });
       //console.log("numbers  ::::", numbers);
       //return numbers;
-    }
+  }
 
   logoutClick() {
-    axios
-      .delete("http://localhost:5555/api/logout", { withCredentials: true })
+    axios.delete("http://localhost:5555/api/logout", { withCredentials: true })
       .then(this.syncCurrentUser(null))
       .catch(err => {
         console.log("LOGOUT ERROR", err);
         alert("Sorry! Something went wrong");
-      });
+    });
   }
 
   handleSearch(event) {
@@ -160,7 +155,6 @@ class App extends Component {
             changeGender={gender => this.changeGender(gender)}
           />
         </header>
-
         <Switch>
           <Route
             path="/home"

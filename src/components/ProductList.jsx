@@ -16,18 +16,23 @@ class ProductList extends Component {
     }    
 
 
-  addToCart(productId) {
+  addToCart(productId, price,event) {
+    event.preventDefault();
     console.log("productId", productId);
     //console.log("props are :::::",this.props);
+    //add a chexck if user log in , if user is not logged in , redirect to login page
     console.log("user   ", this.props.currentUser);
     //axios.post("http://localhost:5555/api/addtocart/"+productId+"/"+this.props.currentUser.email);
     axios.post("http://localhost:5555/api/addtocart",{
       key: productId,
+      price:price,
       user: this.props.currentUser
     }).then(function (response) {
+      window.location.reload(); // something else can be used, need to ask
       console.log(response);
     })
     .catch(function (error) {
+
       console.log(error);
     });
   }
@@ -91,7 +96,7 @@ class ProductList extends Component {
                 <p>{oneProduct.price}</p>
                 <p>{oneProduct.name}</p>
                 <p>{oneProduct.brand}</p>
-                <button onClick={() => this.addToCart(oneProduct._id)}>
+                <button onClick={event => this.addToCart(oneProduct._id,oneProduct.price, event)}>
                   Add to cart
                 </button>
               </li>
