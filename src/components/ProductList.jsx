@@ -26,8 +26,7 @@ class ProductList extends Component {
     axios.post("http://localhost:5555/api/addtocart",{
       key: productId,
       price:price,
-      user: this.props.currentUser
-    }).then(function (response) {
+    },{ withCredentials: true }).then(function (response) {
       window.location.reload(); // something else can be used, need to ask
       console.log(response);
     })
