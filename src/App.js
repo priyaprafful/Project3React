@@ -25,7 +25,8 @@ class App extends Component {
       productArray: [],
       category: "women",
       selecteCheckBox:[],
-      productAmount: 0
+      cartProductNumbers: 0,
+      productData:[],
     };
   }
   componentDidMount() {
@@ -98,8 +99,15 @@ class App extends Component {
     console.log("inside getNumberOfProducts()", this.state.currentUser);
     axios.post("http://localhost:5555/api/myproducts",{ },{ withCredentials: true })
       .then((response) => {
+        console.log("complete jsoon is ::::: ",response.data);
         console.log("numberof products in app  :::::::::", response.data.numbers);
-        this.setState({productAmount:response.data.numbers});
+        console.log(" products in app  :::::::::", response.data.products);
+        
+        var result = JSON.parse(response.data.products)['Products'];
+        console.log(" products in app  after parse :::::::::", result);
+        this.setState({productData:result});
+        console.log("prodcts data    ::::", this.state.productData);
+        this.setState({cartProductNumbers:response.data.numbers});
       }).catch(function (error) {
         console.log(error);
       });
@@ -135,14 +143,14 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser,productData } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <h1>Project 3</h1>
           <NavBar
             currentUser={currentUser}
-            productAmount={this.state.productAmount}
+            cartProductNumbers={this.state.cartProductNumbers}
             logoutClick={() => this.logoutClick()}
             changeGender={gender => this.changeGender(gender)}
           />
@@ -203,6 +211,7 @@ class App extends Component {
               return (
                 <ShowCart
                   currentUser={currentUser}
+                  productData = {productData}
                 />
               );
             }}

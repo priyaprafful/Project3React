@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import FilterProduct from "../components/FilterProduct.js";
 import { Link } from "react-router-dom";
+import  { Redirect } from 'react-router-dom';
 
 function getPhoneUrl(oneProduct) {
   return `/product-details/${oneProduct._id}`;
@@ -16,24 +17,27 @@ class ProductList extends Component {
     }    
 
 
-  addToCart(productId, price,event) {
+  addToCart(productId,name,image, price,event) {
     event.preventDefault();
     console.log("productId", productId);
-    //console.log("props are :::::",this.props);
-    //add a chexck if user log in , if user is not logged in , redirect to login page
     console.log("user   ", this.props.currentUser);
-    //axios.post("http://localhost:5555/api/addtocart/"+productId+"/"+this.props.currentUser.email);
-    axios.post("http://localhost:5555/api/addtocart",{
-      key: productId,
-      price:price,
-    },{ withCredentials: true }).then(function (response) {
-      window.location.reload(); // something else can be used, need to ask
-      console.log(response);
-    })
-    .catch(function (error) {
-
-      console.log(error);
-    });
+    if(this.props.currentUser!=null){
+      axios.post("http://localhost:5555/api/addtocart",{
+        key: productId,
+        name:name,
+        image:image,
+        price:price
+      },{ withCredentials: true }).then(function (response) {
+        window.location.reload(); // something else can be used, need to ask
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    } else{
+      console.log("you need to login to add product");
+       return <Redirect to='/login-page'/>;
+    }
   }
   
   
@@ -95,7 +99,7 @@ class ProductList extends Component {
                 <p>{oneProduct.price}</p>
                 <p>{oneProduct.name}</p>
                 <p>{oneProduct.brand}</p>
-                <button onClick={event => this.addToCart(oneProduct._id,oneProduct.price, event)}>
+                <button onClick={event => this.addToCart(oneProduct._id,oneProduct.name, oneProduct.image,oneProduct.price, event)}>
                   Add to cart
                 </button>
               </li>

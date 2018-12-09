@@ -4,7 +4,8 @@ import axios from 'axios';
 class ShowCart extends Component {
     constructor(props) {
         super(props);
-        this.state = {  
+        this.state = {
+
         }
     }
     componentDidMount(){
@@ -29,6 +30,9 @@ class ShowCart extends Component {
     }
 
     render() { 
+        if (this.props.productData) {
+            console.log("product data is :::: ", this.props.productData);
+          }
         return ( 
             <section>
                 <h1>My Cart</h1>

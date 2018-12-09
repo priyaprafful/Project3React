@@ -39,7 +39,7 @@ class NavBar extends Component {
               
               <span>
                 <NavLink 
-                  to="/showcart">Mycart -{this.props.productAmount}
+                  to="/showcart">Mycart -{this.props.cartProductNumbers}
                 </NavLink>
                 <b>{this.props.currentUser.fullName}</b>
                 <button onClick={() => this.props.logoutClick()}>
