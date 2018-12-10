@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 // import logo from "./logo.svg";
 import "./App.css";
 import SignUpPage from "./components/SignUpPage";
@@ -12,6 +12,7 @@ import ProductList from "./components/ProductList.js";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/ProductDetails";
+import SellerForm from "./components/SellerForm";
 
 class App extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class App extends Component {
       category: "women"
     };
   }
+
+  // ------------------ CHECK USER ANG GET PRODUCTS ------------------
   componentDidMount() {
     axios
       .get("http://localhost:5555/api/checkuser", { withCredentials: true })
@@ -46,14 +49,18 @@ class App extends Component {
       });
   }
 
+  //----------------set state of current user -------------
   syncCurrentUser(userDoc) {
     this.setState({ currentUser: userDoc });
   }
+
+  //-------------- set state of search result ----------
 
   syncFilteredArray = filteredArray => {
     this.setState({ filteredProducts: filteredArray });
   };
 
+  //------------- change gender ------------------
   changeGender(gender) {
     // event.preventDefault();
     console.log("change gender called", gender);
@@ -66,7 +73,7 @@ class App extends Component {
       filteredProducts: filteredProducts
     });
   }
-
+  //---------------- logout -------------------------
   logoutClick() {
     axios
       .delete("http://localhost:5555/api/logout", { withCredentials: true })
@@ -76,6 +83,8 @@ class App extends Component {
         alert("Sorry! Something went wrong");
       });
   }
+
+  //------------Search --------------------------
 
   handleSearch(event) {
     const { value } = event.target;
@@ -97,12 +106,17 @@ class App extends Component {
     });
   }
 
+  //-----------seller form  --------------
+  // handleSubmit(){
+
+  // }
+
   render() {
     const { currentUser } = this.state;
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Project 3</h1>
+          {/* <h1>Project 3</h1> */}
           <NavBar
             currentUser={currentUser}
             logoutClick={() => this.logoutClick()}
@@ -143,6 +157,11 @@ class App extends Component {
           <Route
             path="/product-details/:productId"
             component={ProductDetails}
+          />
+          <Route
+            path="/seller-form"
+            // onSubmit={this.handleSubmit}
+            component={SellerForm}
           />
           <Route
             path="/signup-page"
