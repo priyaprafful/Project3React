@@ -16,13 +16,11 @@ class NavBar extends Component {
               Home
             </NavLink>
             <NavLink
-              onClick={() => this.props.changeGender("man")}
               to="/product-list-man"
             >
               Man
             </NavLink>
             <NavLink
-              onClick={() => this.props.changeGender("women")}
               to="/product-list-women"
             >
               Women

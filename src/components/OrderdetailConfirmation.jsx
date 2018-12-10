@@ -1,35 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
-import OrderForm from './OrderForm';
-
-
-function getPhoneUrl(oneProduct) {
-    return `/product-details/${oneProduct.id}`;
-  }
-  
-
-class ShowCart extends Component {
+import ShowCart from "../components/ShowCart"
+import axios from "axios";
+class OrderDetailConfirmation  extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-           
-        }
+        this.state = {  }
     }
 
-removeFromCart(productId,name,image, price,event) {
-        event.preventDefault();
-        console.log("productId", productId);
+    confirmOrder(){
         console.log("user   ", this.props.currentUser);
-
-        var productString  = productId+"|"+name+"|"+image+"|"+price;
-        console.log("product String to be deleted is ::::: ",productString);
         if(this.props.currentUser!=null){
-          axios.post("http://localhost:5555/api/removeFromcart",{
-            productString: productString,
-            price:price
-          },{ withCredentials: true }).then(response=> {
+          axios.post("http://localhost:5555/api/orderConfirmation",{ withCredentials: true })
+          .then(response=> {
             window.location.reload(); // something else can be used, need to ask
             console.log(response);
           })
@@ -40,16 +23,18 @@ removeFromCart(productId,name,image, price,event) {
           console.log("you need to login to add product");
            return <Redirect to='/login-page'/>;
         }
-      }
-      
+    }
+
+
     render() { 
         if (this.props.productData) {
             console.log("product data is :::: ", this.props.productData);
         }
         const {productData,cartTotal} = this.props;
         return ( 
-            <section className="MyCart">
-                <h1>My Cart</h1>
+            <section>
+               
+                <h1>Your final order</h1>
                 <table id="mycart">
                     <tr>
                     <th>Product</th>
@@ -78,12 +63,10 @@ removeFromCart(productId,name,image, price,event) {
                     <th>cart total is {cartTotal}</th>
                 </tr>
                 </table>
-           
-                <Link to="/order-form"><button>Checkout</button></Link>
-                
-                </section>
+               <button>Confirm Your Order</button>
+            </section>
          );
     }
 }
  
-export default ShowCart;
+export default OrderDetailConfirmation;

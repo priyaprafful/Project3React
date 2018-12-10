@@ -18,10 +18,17 @@ class ProductList extends Component {
 
 
   addToCart(productId,name,image, price,event) {
+
+
+   // (this.props.currentUser ? (console.log("true")) : <Redirect to={{ pathname:"/login-page"}}/> )
+
     event.preventDefault();
     console.log("productId", productId);
     console.log("user   ", this.props.currentUser);
-    if(this.props.currentUser!=null){
+    if (this.props.currentUser === null){
+     // console.log("true ffffff")
+      return <Redirect to= {"/login-page"}/>
+    } else {
       axios.post("http://localhost:5555/api/addtocart",{
         key: productId,
         name:name,
@@ -34,9 +41,6 @@ class ProductList extends Component {
       .catch(function (error) {
         console.log(error);
       });
-    } else{
-      console.log("you need to login to add product");
-       return <Redirect to='/login-page'/>;
     }
   }
   
@@ -99,7 +103,8 @@ class ProductList extends Component {
                 <p>{oneProduct.price}</p>
                 <p>{oneProduct.name}</p>
                 <p>{oneProduct.brand}</p>
-                <button onClick={event => this.addToCart(oneProduct._id,oneProduct.name, oneProduct.image,oneProduct.price, event)}>
+                <button
+                 onClick={event => this.addToCart(oneProduct._id,oneProduct.name, oneProduct.image,oneProduct.price, event)}>
                   Add to cart
                 </button>
               </li>
