@@ -3,21 +3,14 @@ import React, { Component } from "react";
 class Search extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // category: ""
-    };
+    this.state = {};
   }
-
-  // handleSubmit(event) {
-  //   event.preventDefault();
-  //   // this.props.onSubmit({})
-  // }
 
   render() {
     console.log(this.state);
     const { searchFunction, value } = this.props;
     return (
-      <form onSubmit={event => this.handleSubmit(event)}>
+      <form>
         <label>
           Search Item :
           <input
@@ -27,7 +20,6 @@ class Search extends Component {
             onChange={event => searchFunction(event)}
             value={value}
           />
-          <button>Search</button>
         </label>
       </form>
     );

@@ -8,15 +8,10 @@ class HomePage extends Component {
     this.state = {};
   }
 
-  handleSubmit() {
-    // this.setState({});
-  }
-
   render() {
     return (
       <section className="HomePage">
         <Search
-          // onSubmit={this.handleSubmit}
           searchFunction={event => this.props.handleSearch(event)}
           value={this.props.searchString}
         />
@@ -29,13 +24,13 @@ class HomePage extends Component {
         ) : (
           <div>
             <div>
-              <img src="" alt="man-image" />
+              <img src="" alt="man" />
             </div>
             <div>
-              <img src="" alt="women-image" />
+              <img src="" alt="women" />
             </div>
             <div>
-              <img src="" alt="Accesories-image" />
+              <img src="" alt="Accesories" />
             </div>
           </div>
         )}

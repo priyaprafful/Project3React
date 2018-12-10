@@ -9,6 +9,7 @@ import ProductList from "./components/ProductList";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/ProductDetails";
+import SellerForm from "./components/SellerForm";
 import ShowCart from "./components/ShowCart";
 import OrderForm from "./components/OrderForm";
 import OrderdetailConfirmation from "./components/OrderdetailConfirmation";
@@ -23,22 +24,25 @@ class App extends Component {
       filteredProducts: [],
       productArray: [],
       category: "women",
-      selecteCheckBox:[],
+      selecteCheckBox: [],
       cartProductNumbers: 0,
-      productData:[],
-      cartTotal : 0,
-      
+      productData: [],
+      cartTotal: 0
     };
   }
+
+  // ------------------ CHECK USER ANG GET PRODUCTS ------------------
   componentDidMount() {
-    axios.get("http://localhost:5555/api/checkuser", { withCredentials: true })
+    axios
+      .get("http://localhost:5555/api/checkuser", { withCredentials: true })
       .then(response => {
         console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
         this.getNumberOfProducts(userDoc);
         return axios.get("http://localhost:5555/api/products");
-      }).then(response => {
+      })
+      .then(response => {
         //console.log("Product-List",response.data)
         this.setState({
           productArray: response.data
@@ -49,37 +53,39 @@ class App extends Component {
         alert("Sorry!Something went wrong");
       });
 
-      console.log("user is set after mount :::::", this.state.currentUser);
-      
+    console.log("user is set after mount :::::", this.state.currentUser);
   }
 
+  //----------------set state of current user -------------
   syncCurrentUser(userDoc) {
     this.setState({ currentUser: userDoc });
   }
 
+  //-------------- set state of search result ----------
+
   syncFilteredArray = filteredArray => {
     this.setState({ filteredProducts: filteredArray });
   };
-  
-  syncSelectCheckBox=oneSIZE=>{
-    const {selecteCheckBox} = this.state;
-    const selecteCheckBoxCopy=[...selecteCheckBox];
-    selecteCheckBoxCopy.push(oneSIZE)
-    const newFilteredArray= this.filterSize() 
-    this.setState({
-      selecteCheckBox:selecteCheckBoxCopy,
-      filteredProducts: newFilteredArray
-    })
-  }
 
-  filterSize(){
-    const {selecteCheckBox, productArray} = this.state;
-    const selectSize = productArray.filter( oneProduct => {
-      return oneProduct.size.some(function(onesize){
-        return selecteCheckBox.includes(onesize)
-      } )
-    })
-    console.log(selectSize)
+  syncSelectCheckBox = oneSIZE => {
+    const { selecteCheckBox } = this.state;
+    const selecteCheckBoxCopy = [...selecteCheckBox];
+    selecteCheckBoxCopy.push(oneSIZE);
+    const newFilteredArray = this.filterSize();
+    this.setState({
+      selecteCheckBox: selecteCheckBoxCopy,
+      filteredProducts: newFilteredArray
+    });
+  };
+
+  filterSize() {
+    const { selecteCheckBox, productArray } = this.state;
+    const selectSize = productArray.filter(oneProduct => {
+      return oneProduct.size.some(function(onesize) {
+        return selecteCheckBox.includes(onesize);
+      });
+    });
+    console.log(selectSize);
     return selectSize;
   }
 
@@ -105,13 +111,16 @@ class App extends Component {
   }
 
   logoutClick() {
-    axios.delete("http://localhost:5555/api/logout", { withCredentials: true })
+    axios
+      .delete("http://localhost:5555/api/logout", { withCredentials: true })
       .then(this.syncCurrentUser(null))
       .catch(err => {
         console.log("LOGOUT ERROR", err);
         alert("Sorry! Something went wrong");
-    });
+      });
   }
+
+  //------------Search --------------------------
 
   handleSearch(event) {
     const { value } = event.target;
@@ -133,12 +142,17 @@ class App extends Component {
     });
   }
 
+  //-----------seller form  --------------
+  // handleSubmit(){
+
+  // }
+
   render() {
     const { currentUser,productData, cartTotal, productArray } = this.state;
     return (
       <div className="App">
         <header className="App-header">
-          <h1>Project 3</h1>
+          {/* <h1>Project 3</h1> */}
           <NavBar
             currentUser={currentUser}
             cartProductNumbers={this.state.cartProductNumbers}
@@ -190,6 +204,11 @@ class App extends Component {
             component={ProductDetails}
           />
           <Route
+            path="/seller-form"
+            // onSubmit={this.handleSubmit}
+            component={SellerForm}
+          />
+          <Route
             path="/signup-page"
             render={() => {
               return (
@@ -206,8 +225,8 @@ class App extends Component {
               return (
                 <ShowCart
                   currentUser={currentUser}
-                  productData = {productData}
-                  cartTotal = {cartTotal}
+                  productData={productData}
+                  cartTotal={cartTotal}
                 />
               );
             }}

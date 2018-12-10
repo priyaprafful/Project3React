@@ -2,20 +2,18 @@ import React, { Component } from "react";
 import axios from "axios";
 import FilterProduct from "../components/FilterProduct.js";
 import { Link } from "react-router-dom";
-import  { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 function getPhoneUrl(oneProduct) {
   return `/product-details/${oneProduct._id}`;
 }
 
 class ProductList extends Component {
-    
-    constructor(props) {
-        console.log("props :::",props);
-        super(props);
-        this.state = {};
-    }    
-
+  constructor(props) {
+    console.log("props :::", props);
+    super(props);
+    this.state = {};
+  }
 
   addToCart(productId,name,image, price,event) {
 
@@ -43,8 +41,7 @@ class ProductList extends Component {
       });
     }
   }
-  
-  
+
   sortByPriceAsc() {
     const { filteredProducts } = this.props;
     console.log(filteredProducts);
@@ -85,19 +82,21 @@ class ProductList extends Component {
     return (
       <section>
         <h1>Choose your product</h1>
-        <FilterProduct syncSelectCheckBox={this.props.syncSelectCheckBox}/>
+        <FilterProduct syncSelectCheckBox={this.props.syncSelectCheckBox} />
         <button onClick={event => this.sortByPriceDsc(event)}>
           lowest To highest price
         </button>
         <button onClick={event => this.sortByPriceAsc(event)}>
           highest To lowest price
         </button>
+
+        {/* <div className="card"> */}
         <ul>
+          {/* <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"/> */}
           {filteredProducts.map(oneProduct => {
             return (
               <li key={oneProduct._id}>
-              
-                <Link to={getPhoneUrl(oneProduct)} >
+                <Link to={getPhoneUrl(oneProduct)}>
                   <img src={oneProduct.image} alt={oneProduct.name} />
                 </Link>
                 <p>{oneProduct.price}</p>
@@ -111,6 +110,7 @@ class ProductList extends Component {
             );
           })}
         </ul>
+        {/* </div> */}
       </section>
     );
   }
