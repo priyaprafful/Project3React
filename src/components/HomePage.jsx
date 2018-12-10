@@ -19,6 +19,7 @@ class HomePage extends Component {
           <ProductList
             filteredProducts={this.props.filteredProducts}
             syncFilteredArray={this.props.syncFilteredArray}
+            syncSelectCheckBox={this.props.syncSelectCheckBox}
           />
         ) : (
           <div>

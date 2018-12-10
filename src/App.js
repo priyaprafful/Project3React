@@ -8,11 +8,12 @@ import axios from "axios";
 // import SearchField from "react-search-field";
 //import Search from "./components/SearchBar";
 
-import ProductList from "./components/ProductList.js";
+import ProductList from "./components/ProductList";
 import NavBar from "./components/NavBar";
 import HomePage from "./components/HomePage";
 import ProductDetails from "./components/ProductDetails";
 import SellerForm from "./components/SellerForm";
+import ShowCart from "./components/ShowCart";
 
 class App extends Component {
   constructor(props) {
@@ -23,7 +24,11 @@ class App extends Component {
       searchString: "",
       filteredProducts: [],
       productArray: [],
-      category: "women"
+      category: "women",
+      selecteCheckBox: [],
+      cartProductNumbers: 0,
+      productData: [],
+      cartTotal: 0
     };
   }
 
@@ -35,6 +40,7 @@ class App extends Component {
         console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
+        this.getNumberOfProducts(userDoc);
         return axios.get("http://localhost:5555/api/products");
       })
       .then(response => {
@@ -47,6 +53,8 @@ class App extends Component {
         console.log("CHECK USER ERROR or product List error", err);
         alert("Sorry!Something went wrong");
       });
+
+    console.log("user is set after mount :::::", this.state.currentUser);
   }
 
   //----------------set state of current user -------------
@@ -59,6 +67,28 @@ class App extends Component {
   syncFilteredArray = filteredArray => {
     this.setState({ filteredProducts: filteredArray });
   };
+
+  syncSelectCheckBox = oneSIZE => {
+    const { selecteCheckBox } = this.state;
+    const selecteCheckBoxCopy = [...selecteCheckBox];
+    selecteCheckBoxCopy.push(oneSIZE);
+    const newFilteredArray = this.filterSize();
+    this.setState({
+      selecteCheckBox: selecteCheckBoxCopy,
+      filteredProducts: newFilteredArray
+    });
+  };
+
+  filterSize() {
+    const { selecteCheckBox, productArray } = this.state;
+    const selectSize = productArray.filter(oneProduct => {
+      return oneProduct.size.some(function(onesize) {
+        return selecteCheckBox.includes(onesize);
+      });
+    });
+    console.log(selectSize);
+    return selectSize;
+  }
 
   //------------- change gender ------------------
   changeGender(gender) {
@@ -74,6 +104,37 @@ class App extends Component {
     });
   }
   //---------------- logout -------------------------
+
+  getNumberOfProducts(userDoc) {
+    console.log("inside getNumberOfProducts()", this.state.currentUser);
+    axios
+      .post(
+        "http://localhost:5555/api/myproducts",
+        {},
+        { withCredentials: true }
+      )
+      .then(response => {
+        console.log("complete jsoon is ::::: ", response.data);
+        console.log(
+          "numberof products in app  :::::::::",
+          response.data.numbers
+        );
+        console.log(" products in app  :::::::::", response.data.products);
+
+        var result = JSON.parse(response.data.products)["Products"];
+        console.log(" products in app  after parse :::::::::", result);
+        this.setState({ productData: result });
+        console.log("prodcts data    ::::", this.state.productData);
+        this.setState({ cartProductNumbers: response.data.numbers });
+        console.log("cart total before set is ::::: ", this.state.cartTotal);
+        this.setState({ cartTotal: response.data.cartTotal });
+        console.log("cart total after set is ::::: ", this.state.cartTotal);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+
   logoutClick() {
     axios
       .delete("http://localhost:5555/api/logout", { withCredentials: true })
@@ -112,18 +173,18 @@ class App extends Component {
   // }
 
   render() {
-    const { currentUser } = this.state;
+    const { currentUser, productData, cartTotal } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           {/* <h1>Project 3</h1> */}
           <NavBar
             currentUser={currentUser}
+            cartProductNumbers={this.state.cartProductNumbers}
             logoutClick={() => this.logoutClick()}
             changeGender={gender => this.changeGender(gender)}
           />
         </header>
-
         <Switch>
           <Route
             path="/home"
@@ -133,6 +194,7 @@ class App extends Component {
                 searchString={this.state.searchString}
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
+                syncSelectCheckBox={this.syncSelectCheckBox}
               />
             )}
           />
@@ -140,8 +202,10 @@ class App extends Component {
             path="/product-list-man"
             render={() => (
               <ProductList
+                currentUser={currentUser}
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
+                syncSelectCheckBox={this.syncSelectCheckBox}
               />
             )}
           />
@@ -149,8 +213,10 @@ class App extends Component {
             path="/product-list-women"
             render={() => (
               <ProductList
+                currentUser={currentUser}
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
+                syncSelectCheckBox={this.syncSelectCheckBox}
               />
             )}
           />
@@ -174,7 +240,18 @@ class App extends Component {
               );
             }}
           />
-
+          <Route
+            path="/showcart"
+            render={() => {
+              return (
+                <ShowCart
+                  currentUser={currentUser}
+                  productData={productData}
+                  cartTotal={cartTotal}
+                />
+              );
+            }}
+          />
           <Route
             path="/login-page"
             render={() => {

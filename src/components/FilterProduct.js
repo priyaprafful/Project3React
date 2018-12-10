@@ -10,15 +10,6 @@ const size = [
 ];
 
 class FilterProduct extends Component {
-    constructor(props){
-        super(props)
-        this.state=({
-            selecteCheckBox:[],
-        })
-
-}
-
-
 // togglecheckbox=(label)=>{
 //         if(this.selecteCheckBox.has(label)){
 //             this.selecteCheckBox.delete(label);
@@ -31,16 +22,17 @@ class FilterProduct extends Component {
 //     }
  
     createCheckbox=(label)=>(
-    <CheckBox
-        classes="filters-size"
-        label={label}
-        handlecheckbox={this.togglecheckbox}
-        key={label}
-    />
-)
- createCheckBoxes = ()=>(
- size.map(this.createCheckbox)
- )
+        <CheckBox
+            classes="filters-size"
+            label={label}
+            key={label}
+            syncSelectCheckBox={this.props.syncSelectCheckBox}
+        />
+    )
+
+    createCheckBoxes = ()=>(
+        size.map(this.createCheckbox)
+    )
 
     render() { 
         return ( 

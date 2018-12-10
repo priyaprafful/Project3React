@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import MyCart from "../components/MyCart";
 
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { loggedInUser: this.props.currentUser };
   }
   render() {
     return (
@@ -61,6 +62,9 @@ class NavBar extends Component {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
+                  <NavLink to="/showcart">
+                    Mycart -{this.props.cartProductNumbers}
+                  </NavLink>
                   <b>{this.props.currentUser.fullName}</b>
                   <button
                     onClick={() => this.props.logoutClick()}
