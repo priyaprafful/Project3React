@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
@@ -12,7 +12,7 @@ import ProductDetails from "./components/ProductDetails";
 import SellerForm from "./components/SellerForm";
 import ShowCart from "./components/ShowCart";
 import OrderForm from "./components/OrderForm";
-import OrderdetailConfirmation from "./components/OrderdetailConfirmation";
+
 
 class App extends Component {
   constructor(props) {
@@ -254,19 +254,7 @@ class App extends Component {
               );
             }}
           />
-          <Route
-            path="/orderDetail-confirmation"
-            render={() => {
-              return (
-                <OrderdetailConfirmation
-                  currentUser={this.state.currentUser}
-                  productData = {productData}
-                  cartTotal = {cartTotal}
-                 // onUserChange={userDoc => this.syncCurrentUser(userDoc)}
-                />
-              );
-            }}
-          />
+          
         </Switch>
 
         <footer>

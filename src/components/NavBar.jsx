@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import MyCart from "../components/MyCart";
 
 class NavBar extends Component {
   constructor(props) {

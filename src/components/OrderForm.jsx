@@ -33,10 +33,10 @@ class OrderForm extends Component {
                 orderedProducts:productString
                 },{ withCredentials: true }).then(function (response) {
                     console.log("response after placed order :::", response.data.orderId);
-                    var orderId =  response.data.orderId;
-                    var redirectionURL = "/orderSuccess"+"?o="+orderId;
+                    //var orderId =  response.data.orderId;
+                    //var redirectionURL = "/orderSuccess"+"?o="+orderId;
                     //pass paramater on redirect
-                    return <Redirect to={redirectionURL}/>;
+                   // return <Redirect to={redirectionURL}/>;
             }).catch(function (error) {
                 console.log(error);
             });
