@@ -18,18 +18,18 @@ class ShowCart extends Component {
 
      removeFromCart(productId,name,image, price,event) {
         event.preventDefault();
-        console.log("productId", productId);
-        console.log("user   ", this.props.currentUser);
+        //console.log("productId", productId);
+        //console.log("user   ", this.props.currentUser);
 
         var productString  = productId+"|"+name+"|"+image+"|"+price;
-        console.log("product String to be deleted is ::::: ",productString);
+        //console.log("product String to be deleted is ::::: ",productString);
         if(this.props.currentUser!=null){
           axios.post("http://localhost:5555/api/removeFromcart",{
             productString: productString,
             price:price
           },{ withCredentials: true }).then(response=> {
             window.location.reload(); // something else can be used, need to ask
-            console.log(response);
+            //console.log(response);
           })
           .catch(function (error) {
             console.log(error);
@@ -42,39 +42,41 @@ class ShowCart extends Component {
       
       
     render() { 
-        if (this.props.productData) {
-            console.log("product data is :::: ", this.props.productData);
-        }
+        // if (this.props.productData) {
+        //     console.log("product data is :::: ", this.props.productData);
+        // }
         const {productData,cartTotal} = this.props;
-        console.log("Cart total in front in showcart", this.props)
+        //console.log("Cart total in front in showcart", this.props)
         return ( 
             <section className="MyCart">
                 <h1>My Cart</h1>
                 <table id="mycart">
-                    <tr>
-                    <th>Product</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                   </tr>
-                    
-                    {productData.map(oneProduct => {
-                    return (
-                        <tr key={oneProduct.id}>
-                          
-                          <th><img src={oneProduct.imagePath} alt={oneProduct.name} /></th>
-                          <th><p>{oneProduct.name}</p></th>
-                          <th><p>{oneProduct.price}</p></th>
-                          <th><button onClick={event => this.removeFromCart(oneProduct.id,oneProduct.name, oneProduct.imagePath,oneProduct.price, event)}>
-                                Remove
-                            </button></th>
+                    <tbody>
+                        <tr>
+                            <th>Product</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                    </tr>
+                        
+                        {productData.map(oneProduct => {
+                        return (
+                            <tr key={oneProduct.id}>
+                            
+                            <th><img src={oneProduct.imagePath} alt={oneProduct.name} /></th>
+                            <th><p>{oneProduct.name}</p></th>
+                            <th><p>{oneProduct.price}</p></th>
+                            <th><button onClick={event => this.removeFromCart(oneProduct.id,oneProduct.name, oneProduct.imagePath,oneProduct.price, event)}>
+                                    Remove
+                                </button></th>
+                            </tr>
+                            );
+                        })}
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>cart total is {cartTotal}</th>
                         </tr>
-                        );
-                    })}
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>cart total is {cartTotal}</th>
-                </tr>
+                    </tbody>
                 </table>
            
                 <Link to="/order-form"><button>Checkout</button></Link>

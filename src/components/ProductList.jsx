@@ -9,7 +9,7 @@ function getPhoneUrl(oneProduct) {
 
 class ProductList extends Component {
   constructor(props) {
-    console.log("props :::", props);
+    //console.log("props :::", props);
     super(props);
     this.state = {
       shouldLogin:false,
@@ -21,7 +21,7 @@ class ProductList extends Component {
  sortByPriceAsc() {
   console.log("My list before getting sorted", this.props.filteredProducts)
     const { filteredProducts } = this.props;
-    console.log(filteredProducts);
+    //console.log(filteredProducts);
     filteredProducts.sort((a, b) => {
       if (a.price < b.price) {
         //sort string ascending
@@ -33,12 +33,12 @@ class ProductList extends Component {
         return 0;
       }
     });
-    console.log("My list after getting sorted", filteredProducts)
+    //.log("My list after getting sorted", filteredProducts)
     this.props.syncFilteredArray(filteredProducts);
   }
   sortByPriceDsc() {
     const { filteredProducts } = this.props;
-    console.log(filteredProducts);
+    //console.log(filteredProducts);
     filteredProducts.sort((a, b) => {
       if (a.price > b.price) {
         //sort string ascending
@@ -55,7 +55,7 @@ class ProductList extends Component {
 
   render() {
     const { filteredProducts } = this.props;
-    console.log(this.props)
+    //console.log(this.props)
     if(this.props.shouldLogin){
       return <Redirect to="/login-page"/>
     }

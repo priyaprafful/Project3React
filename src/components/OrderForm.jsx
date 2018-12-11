@@ -11,8 +11,8 @@ class OrderForm extends Component {
             shippingName:"",
             shippingAddress:"",
             shippingMobile:"",
-            orderSucces:false
-
+            orderSucces:false,
+            orderId:""
 
          }
     }
@@ -26,7 +26,7 @@ class OrderForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.props.currentUser!=null){
-            console.log("productData  in order form : ",this.props.productData);
+            //console.log("productData  in order form : ",this.props.productData);
             var productString = JSON.stringify(this.props.productData);
 
             axios.post("http://localhost:5555/api/place-order",{
@@ -36,12 +36,12 @@ class OrderForm extends Component {
                 orderedProducts:productString
                 },{ withCredentials: true })
                 .then((response)=> {
-                    console.log("response after placed order :::", response.data.orderId);
-                    var orderId =  response.data.orderId;
+                    //console.log("response after placed order :::", response.data.orderId);
+                    //var orderId =  response.data.orderId;
                     //var redirectionURL = "/orderSuccess"+"?o="+orderId;
                     //pass paramater on redirect
                     this.props.setCartToZero();
-                    this.setState({orderSucces:true})
+                    this.setState({orderSucces:true, orderId:response.data.orderId});
                     
                }).catch( (error)=> {
                 console.log(error);
@@ -56,7 +56,8 @@ class OrderForm extends Component {
     
     render() { 
         if(this.state.orderSucces){
-        return <Redirect to="/orderSuccess"/>;
+           var  redirectionLink = "/orderSuccess?orderId="+this.state.orderId;
+        return <Redirect to={redirectionLink}/>;
      }
        return ( 
           <section>

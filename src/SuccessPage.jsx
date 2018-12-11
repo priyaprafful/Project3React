@@ -6,6 +6,7 @@ class SuccessPage extends Component {
         this.state = {  }
     }
     render() { 
+        
         return ( 
             <section>
             <h1>Successfully Order Placed </h1>

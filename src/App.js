@@ -41,10 +41,10 @@ class App extends Component {
     axios
       .get("http://localhost:5555/api/checkuser", { withCredentials: true })
       .then(response => {
-        console.log("CHECK USER", response.data);
+        //console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
-        this.getNumberOfProducts(userDoc);
+        this.setCartData();
         return axios.get("http://localhost:5555/api/products");
       })
       .then(response => {
@@ -67,7 +67,7 @@ class App extends Component {
         alert("Sorry!Something went wrong");
       });
 
-    console.log("user is set after mount :::::", this.state.currentUser);
+    //console.log("user is set after mount :::::", this.state.currentUser);
   }
 
   //----------------set state of current user -------------
@@ -78,7 +78,7 @@ class App extends Component {
   //-------------- set state of search result ----------
 
   syncFilteredArray = filteredArray => {
-    console.log("filteredArray received in app.js", filteredArray)
+    //console.log("filteredArray received in app.js", filteredArray)
     this.setState({ menProducts: filteredArray }, ()=> console.log("State APP JS after setstate",this.state));
   };
   
@@ -101,7 +101,7 @@ class App extends Component {
         return selecteCheckBox.includes(onesize);
       });
     });
-    console.log(selectSize);
+    //console.log(selectSize);
     return selectSize;
   }
   
@@ -119,7 +119,7 @@ class App extends Component {
       },{ withCredentials: true }).then( (response) => {
        //window.location.reload(); // something else can be used, need to ask
       //  this.setState
-        console.log("MY RESPONES",response.data);
+        //console.log("MY RESPONES",response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -127,26 +127,19 @@ class App extends Component {
     }
   }
 
- getNumberOfProducts(userDoc){
-    axios.post("http://localhost:5555/api/myproducts",{},{ withCredentials: true })
-      .then((response) => {
-        console.log("1. complete jsoon is ::::: ",response.data);
-        //console.log("numberof products in app  :::::::::", response.data.numbers);
-        //console.log(" products in app  :::::::::", response.data.products);
-        //convetting string to jsonn object, so that we can retreiev values easily from Products json
-        var result = JSON.parse(response.data.products)['Products'];
-        //console.log(" products in app  after parse :::::::::", result);
-        this.setState({productData:result,cartProductNumbers:response.data.numbers,cartTotal:response.data.cartTotal});
-        console.log("response data cart total---",response.data.cartTotal)
-        //console.log("prodcts data    ::::", this.state.productData);
-        //this.setState({cartProductNumbers:response.data.numbers});
-        //console.log("cart total before set is ::::: ",this.state.cartTotal)
-        //this.setState({cartTotal:response.data.cartTotal});
-        //console.log("cart total after set is ::::: ",this.state.cartTotal)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+ setCartData(){
+    if (this.state.currentUser === null){
+      this.setState({shouldLogin:true})
+    } else {
+      axios.post("http://localhost:5555/api/myproducts",{},{ withCredentials: true })
+        .then((response) => {
+          var result = JSON.parse(response.data.products)['Products'];
+          this.setState({productData:result,cartProductNumbers:response.data.numbers,cartTotal:response.data.cartTotal});
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
   }
 
   setCartToZero=()=>{
@@ -168,7 +161,7 @@ class App extends Component {
   handleSearch(event) {
     const { value } = event.target;
     //console.log(value);
-    console.log(this.state);
+    //console.log(this.state);
     // console.log(filteredProducts);
     const filteredArray = this.state.productArray.filter(oneProduct => {
       const lowerValue = value.toLowerCase();
@@ -192,7 +185,7 @@ class App extends Component {
 
   render() {
     const { currentUser,productData, cartTotal, productArray, menProducts, womenProduct } = this.state;
-    console.log("Cart total in APP.JS before return", cartTotal)
+    //console.log("Cart total in APP.JS before return", cartTotal)
     return (
       <div className="App">
         <header className="App-header">
