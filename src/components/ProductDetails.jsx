@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
+import ProductList from "./ProductList";
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -27,6 +29,9 @@ class ProductDetails extends Component {
   
   render() {
     const { _id,image, name, brand, price, size, description } = this.state;
+    if(this.props.shouldLogin){
+      return <Redirect to="/login-page"/>
+    }
     return (
       <section className="ProductDetails">
         <h3>Product Details</h3>
@@ -37,9 +42,13 @@ class ProductDetails extends Component {
         </p>
         <b>€{price}</b>
         <h4>{size}</h4>
-        <button onClick={() => this.addToCart(_id)}>Add to cart</button>
+        <button onClick={(event) => this.props.addToCart(_id,name,image,price, event)}>Add to cart</button>
         <p>{description}</p>
-      </section>
+        
+          <h2>people may also like</h2>
+          
+          
+        </section>
     );
   }
 }

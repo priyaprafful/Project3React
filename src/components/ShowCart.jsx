@@ -16,7 +16,7 @@ class ShowCart extends Component {
         }
     }
 
-removeFromCart(productId,name,image, price,event) {
+     removeFromCart(productId,name,image, price,event) {
         event.preventDefault();
         console.log("productId", productId);
         console.log("user   ", this.props.currentUser);
@@ -40,11 +40,13 @@ removeFromCart(productId,name,image, price,event) {
         }
       }
       
+      
     render() { 
         if (this.props.productData) {
             console.log("product data is :::: ", this.props.productData);
         }
         const {productData,cartTotal} = this.props;
+        console.log("Cart total in front in showcart", this.props)
         return ( 
             <section className="MyCart">
                 <h1>My Cart</h1>
@@ -53,9 +55,7 @@ removeFromCart(productId,name,image, price,event) {
                     <th>Product</th>
                     <th>Name</th>
                     <th>Price</th>
-                   
-                   
-                    </tr>
+                   </tr>
                     
                     {productData.map(oneProduct => {
                     return (

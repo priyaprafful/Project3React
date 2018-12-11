@@ -12,6 +12,7 @@ import ProductDetails from "./components/ProductDetails";
 import SellerForm from "./components/SellerForm";
 import ShowCart from "./components/ShowCart";
 import OrderForm from "./components/OrderForm";
+import SuccessPage from "./SuccessPage";
 
 
 class App extends Component {
@@ -21,13 +22,17 @@ class App extends Component {
       myproducts: [],
       currentUser: null,
       searchString: "",
+      menProducts: [],
+      womenProduct: [],
       filteredProducts: [],
       productArray: [],
       category: "women",
       selecteCheckBox: [],
       cartProductNumbers: 0,
       productData: [],
-      cartTotal: 0
+      cartTotal: 0,
+      shouldLogin:false,
+    
     };
   }
 
@@ -43,9 +48,18 @@ class App extends Component {
         return axios.get("http://localhost:5555/api/products");
       })
       .then(response => {
+        let allMenProduct = response.data.filter(oneProduct => {
+          return oneProduct.category === "man"
+        });
+        let allwomenProducts = response.data.filter(oneProduct => {
+          return oneProduct.category === "women"
+        });
+
         //console.log("Product-List",response.data)
         this.setState({
-          productArray: response.data
+          productArray: response.data,
+          menProducts: allMenProduct,
+          womenProduct:allwomenProducts
         });
       })
       .catch(err => {
@@ -64,8 +78,10 @@ class App extends Component {
   //-------------- set state of search result ----------
 
   syncFilteredArray = filteredArray => {
-    this.setState({ filteredProducts: filteredArray });
+    console.log("filteredArray received in app.js", filteredArray)
+    this.setState({ menProducts: filteredArray }, ()=> console.log("State APP JS after setstate",this.state));
   };
+  
 
   syncSelectCheckBox = oneSIZE => {
     const { selecteCheckBox } = this.state;
@@ -88,26 +104,53 @@ class App extends Component {
     console.log(selectSize);
     return selectSize;
   }
+  
+
+  addToCart = (productId,name,image, price,event) => {
+    event.preventDefault();
+    if (this.state.currentUser === null){
+     this.setState({shouldLogin:true})
+    } else {
+      axios.post("http://localhost:5555/api/addtocart",{
+        key: productId,
+        name:name,
+        image:image,
+        price:price
+      },{ withCredentials: true }).then( (response) => {
+       //window.location.reload(); // something else can be used, need to ask
+      //  this.setState
+        console.log("MY RESPONES",response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
 
  getNumberOfProducts(userDoc){
-    axios.post("http://localhost:5555/api/myproducts",{ },{ withCredentials: true })
+    axios.post("http://localhost:5555/api/myproducts",{},{ withCredentials: true })
       .then((response) => {
-        //console.log("complete jsoon is ::::: ",response.data);
+        console.log("1. complete jsoon is ::::: ",response.data);
         //console.log("numberof products in app  :::::::::", response.data.numbers);
         //console.log(" products in app  :::::::::", response.data.products);
         //convetting string to jsonn object, so that we can retreiev values easily from Products json
         var result = JSON.parse(response.data.products)['Products'];
         //console.log(" products in app  after parse :::::::::", result);
-        this.setState({productData:result});
+        this.setState({productData:result,cartProductNumbers:response.data.numbers,cartTotal:response.data.cartTotal});
+        console.log("response data cart total---",response.data.cartTotal)
         //console.log("prodcts data    ::::", this.state.productData);
-        this.setState({cartProductNumbers:response.data.numbers});
+        //this.setState({cartProductNumbers:response.data.numbers});
         //console.log("cart total before set is ::::: ",this.state.cartTotal)
-        this.setState({cartTotal:response.data.cartTotal});
+        //this.setState({cartTotal:response.data.cartTotal});
         //console.log("cart total after set is ::::: ",this.state.cartTotal)
-        
-      }).catch(function (error) {
+      })
+      .catch(function (error) {
         console.log(error);
       });
+  }
+
+  setCartToZero=()=>{
+           this.setState({cartProductNumbers:0})
   }
 
   logoutClick() {
@@ -148,7 +191,8 @@ class App extends Component {
   // }
 
   render() {
-    const { currentUser,productData, cartTotal, productArray } = this.state;
+    const { currentUser,productData, cartTotal, productArray, menProducts, womenProduct } = this.state;
+    console.log("Cart total in APP.JS before return", cartTotal)
     return (
       <div className="App">
         <header className="App-header">
@@ -157,7 +201,6 @@ class App extends Component {
             currentUser={currentUser}
             cartProductNumbers={this.state.cartProductNumbers}
             logoutClick={() => this.logoutClick()}
-            changeGender={gender => this.changeGender(gender)}
           />
         </header>
         <Switch>
@@ -170,6 +213,8 @@ class App extends Component {
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
+                addToCart={this.addToCart}
+                shouldLogin={this.state.shouldLogin}
               />
             )}
           />
@@ -178,11 +223,13 @@ class App extends Component {
             render={() => (
               <ProductList
                 currentUser={currentUser}
-                filteredProducts={productArray.filter(oneProduct => {
-                  return oneProduct.category === "man"
-                })}
+                filteredProducts={menProducts}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
+                addToCart={this.addToCart}
+                shouldLogin={this.state.shouldLogin}
+                sortByPriceDsc={this.sortByPriceDsc}
+
               />
             )}
           />
@@ -191,17 +238,24 @@ class App extends Component {
             render={() => (
               <ProductList
                 currentUser={currentUser}
-                filteredProducts={productArray.filter(oneProduct => {
-                  return oneProduct.category === "women"
-                })}
+                filteredProducts={womenProduct}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
+                addToCart={this.addToCart}
+                shouldLogin={this.state.shouldLogin}
               />
             )}
           />
           <Route
             path="/product-details/:productId"
-            component={ProductDetails}
+            render={({match})=>(
+              <ProductDetails
+               addToCart={this.addToCart}
+               match={match}
+               shouldLogin={this.state.shouldLogin}
+               filteredProducts={this.state.filteredProducts}
+            />
+            )}
           />
           <Route
             path="/seller-form"
@@ -249,7 +303,19 @@ class App extends Component {
                 <OrderForm
                   currentUser={this.state.currentUser}
                   productData={this.state.productData}
+                  setCartToZero={this.setCartToZero}
                  // onUserChange={userDoc => this.syncCurrentUser(userDoc)}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/orderSuccess"
+            render={() => {
+              return (
+                <SuccessPage
+                  currentUser={this.state.currentUser}
+                  // onUserChange={userDoc => this.syncCurrentUser(userDoc)}
                 />
               );
             }}

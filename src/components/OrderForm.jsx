@@ -10,7 +10,10 @@ class OrderForm extends Component {
         this.state = { 
             shippingName:"",
             shippingAddress:"",
-            shippingMobile:""
+            shippingMobile:"",
+            orderSucces:false
+
+
          }
     }
 
@@ -31,25 +34,30 @@ class OrderForm extends Component {
                 shippingAddress:this.state.shippingAddress,
                 shippingMobile:this.state.shippingMobile,
                 orderedProducts:productString
-                },{ withCredentials: true }).then(function (response) {
+                },{ withCredentials: true })
+                .then((response)=> {
                     console.log("response after placed order :::", response.data.orderId);
-                    //var orderId =  response.data.orderId;
+                    var orderId =  response.data.orderId;
                     //var redirectionURL = "/orderSuccess"+"?o="+orderId;
                     //pass paramater on redirect
-                   // return <Redirect to={redirectionURL}/>;
-            }).catch(function (error) {
+                    this.props.setCartToZero();
+                    this.setState({orderSucces:true})
+                    
+               }).catch( (error)=> {
                 console.log(error);
-            });
-        } else{
+               });
+            } else{
             console.log("you need to login to add product");
             return <Redirect to='/login-page'/>;
-        }
-        return <Redirect to='/'/>; 
+            }
+           return <Redirect to='/'/>; 
     }
      
     
     render() { 
-        
+        if(this.state.orderSucces){
+        return <Redirect to="/orderSuccess"/>;
+     }
        return ( 
           <section>
               
