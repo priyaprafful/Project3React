@@ -18,18 +18,14 @@ class ShowCart extends Component {
 
      removeFromCart(productId,name,image, price,event) {
         event.preventDefault();
-        //console.log("productId", productId);
-        //console.log("user   ", this.props.currentUser);
-
         var productString  = productId+"|"+name+"|"+image+"|"+price;
-        //console.log("product String to be deleted is ::::: ",productString);
-        if(this.props.currentUser!=null){
+       if(this.props.currentUser!=null){
           axios.post("http://localhost:5555/api/removeFromcart",{
             productString: productString,
             price:price
           },{ withCredentials: true }).then(response=> {
-            window.location.reload(); // something else can be used, need to ask
-            //console.log(response);
+            // window.location.reload(); // something else can be used, need to ask
+          this.props.setCartData();
           })
           .catch(function (error) {
             console.log(error);
@@ -42,11 +38,7 @@ class ShowCart extends Component {
       
       
     render() { 
-        // if (this.props.productData) {
-        //     console.log("product data is :::: ", this.props.productData);
-        // }
         const {productData,cartTotal} = this.props;
-        //console.log("Cart total in front in showcart", this.props)
         return ( 
             <section className="MyCart">
                 <h1>My Cart</h1>

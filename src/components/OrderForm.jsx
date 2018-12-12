@@ -65,20 +65,29 @@ class OrderForm extends Component {
               <div className="Order-form">
                 <form onSubmit={event => this.handleSubmit(event)} className="OrderForm">
                 <h1>Fill Your Details</h1>
-                      <label>Name:
-                          <input type="text" value={this.state.name} placeholder="Your Name" name="shippingName" onChange={event => this.genericSync(event)} />
-                      </label>
+                 <div className="row">
 
-                      <label>Address:
-                          <input type="text" value={this.state.address} placeholder="Your shiiping Address" name="shippingAddress" onChange={event => this.genericSync(event)} />
-                      </label>
-                      <label>Mobile No:
-                          <input type="number" value={this.state.mobileno} placeholder="064646464" name="shippingMobile"  onChange={event => this.genericSync(event)} />
-                      </label>
-                      <input type="submit" value="Place your order"/>
- 
-                  </form>
-                </div>  
+
+                 <div className="col-25">
+                   <label>Name: </label>
+                   <input type="text" value={this.state.name} placeholder="Your Name" name="shippingName" onChange={event => this.genericSync(event)} />
+                 </div>
+
+
+                <div className="col-25">
+                     <label>Address: </label>
+                     <input type="text" value={this.state.address} placeholder="Your shiiping Address" name="shippingAddress" onChange={event => this.genericSync(event)} />
+                </div>
+                <div className="col-25">
+                    <label>Mobile No:</label>
+                    <input type="number" value={this.state.mobileno} placeholder="064646464" name="shippingMobile"  onChange={event => this.genericSync(event)} />
+                </div>
+                <div class="row">
+                    <input type="submit" value="Place your order"/>
+                </div>
+                </div>
+                </form>
+              </div>  
             </section>
          );
     }

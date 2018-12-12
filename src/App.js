@@ -31,8 +31,7 @@ class App extends Component {
       cartProductNumbers: 0,
       productData: [],
       cartTotal: 0,
-      shouldLogin:false,
-    
+      shouldLogin:false
     };
   }
 
@@ -55,11 +54,10 @@ class App extends Component {
           return oneProduct.category === "women"
         });
 
-        //console.log("Product-List",response.data)
-        this.setState({
+       this.setState({
           productArray: response.data,
           menProducts: allMenProduct,
-          womenProduct:allwomenProducts
+          womenProduct:allwomenProducts,
         });
       })
       .catch(err => {
@@ -67,7 +65,8 @@ class App extends Component {
         alert("Sorry!Something went wrong");
       });
 
-    //console.log("user is set after mount :::::", this.state.currentUser);
+   
+      
   }
 
   //----------------set state of current user -------------
@@ -116,34 +115,35 @@ class App extends Component {
         name:name,
         image:image,
         price:price
-      },{ withCredentials: true }).then( (response) => {
-       //window.location.reload(); // something else can be used, need to ask
-      //  this.setState
-        //console.log("MY RESPONES",response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
-  }
-
- setCartData(){
-    if (this.state.currentUser === null){
-      this.setState({shouldLogin:true})
-    } else {
-      axios.post("http://localhost:5555/api/myproducts",{},{ withCredentials: true })
-        .then((response) => {
-          var result = JSON.parse(response.data.products)['Products'];
-          this.setState({productData:result,cartProductNumbers:response.data.numbers,cartTotal:response.data.cartTotal});
+      },
+      { withCredentials: true })
+        .then( (response) => {
+         this.setCartData();
+        // window.location.reload(); // something else can be used, need to ask
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
         });
     }
   }
 
+ setCartData(){
+      axios.post("http://localhost:5555/api/myproducts", {},{ withCredentials: true })
+        .then((response) => {
+          var result = JSON.parse(response.data.products)['Products'];
+          this.setState({
+            productData:result,
+            cartProductNumbers:response.data.numbers,
+            cartTotal:response.data.cartTotal
+          });
+        })
+        .catch( (error)=> {
+          console.log(error);
+        });
+  }
+
   setCartToZero=()=>{
-           this.setState({cartProductNumbers:0})
+     this.setState({cartProductNumbers:0})
   }
 
   logoutClick() {
@@ -160,9 +160,8 @@ class App extends Component {
 
   handleSearch(event) {
     const { value } = event.target;
-    //console.log(value);
-    //console.log(this.state);
-    // console.log(filteredProducts);
+   
+    
     const filteredArray = this.state.productArray.filter(oneProduct => {
       const lowerValue = value.toLowerCase();
       return (
@@ -222,7 +221,6 @@ class App extends Component {
                 addToCart={this.addToCart}
                 shouldLogin={this.state.shouldLogin}
                 sortByPriceDsc={this.sortByPriceDsc}
-
               />
             )}
           />
@@ -274,6 +272,7 @@ class App extends Component {
                   currentUser={currentUser}
                   productData={productData}
                   cartTotal={cartTotal}
+                  setCartData={cart => this.setCartData(cart)}
                 />
               );
             }}

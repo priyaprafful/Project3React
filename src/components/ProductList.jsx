@@ -12,7 +12,7 @@ class ProductList extends Component {
     //console.log("props :::", props);
     super(props);
     this.state = {
-      shouldLogin:false,
+    
     };
   }
 
@@ -55,7 +55,7 @@ class ProductList extends Component {
 
   render() {
     const { filteredProducts } = this.props;
-    //console.log(this.props)
+    console.log(this.props.shouldLogin)
     if(this.props.shouldLogin){
       return <Redirect to="/login-page"/>
     }
@@ -80,7 +80,12 @@ class ProductList extends Component {
                 <p>{oneProduct.name}</p>
                 <p>{oneProduct.brand}</p>
                 <button
-                 onClick={event => this.props.addToCart(oneProduct._id,oneProduct.name, oneProduct.image,oneProduct.price, event)}>
+                 onClick={event => this.props.addToCart(
+                                                oneProduct._id,
+                                                oneProduct.name,
+                                                oneProduct.image,
+                                                oneProduct.price,
+                                                event)}>
                   Add to cart
                 </button>
               </li>
