@@ -14,6 +14,13 @@ import HomePage from "./components/HomePage";
 import ProductDetails from "./components/ProductDetails";
 import SellerForm from "./components/SellerForm";
 import ShowCart from "./components/ShowCart";
+import PendingPage from "./components/PendingPage";
+import SeeProducts from "./components/SeeProducts";
+import AdminListPage from "./components/AdminListPage";
+import AdminDetailPage from "./components/AdminDetailPage";
+import AdminRefusedpage from "./components/AdminRefusedPage";
+import AdminAcceptPage from "./components/AdminAcceptPage";
+import AdminSettings from "./components/AdminSettings";
 
 class App extends Component {
   constructor(props) {
@@ -28,7 +35,8 @@ class App extends Component {
       selecteCheckBox: [],
       cartProductNumbers: 0,
       productData: [],
-      cartTotal: 0
+      cartTotal: 0,
+      productCheck: []
     };
   }
 
@@ -91,18 +99,18 @@ class App extends Component {
   }
 
   //------------- change gender ------------------
-  changeGender(gender) {
-    // event.preventDefault();
-    console.log("change gender called", gender);
-    const { productArray } = this.state;
-    const filteredProducts = productArray.filter(oneProduct => {
-      return oneProduct.category === gender;
-    });
-    this.setState({
-      category: gender,
-      filteredProducts: filteredProducts
-    });
-  }
+  // changeGender(gender) {
+  //   // event.preventDefault();
+  //   console.log("change gender called", gender);
+  //   const { productArray } = this.state;
+  //   const filteredProducts = productArray.filter(oneProduct => {
+  //     return oneProduct.category === gender;
+  //   });
+  //   this.setState({
+  //     category: gender,
+  //     filteredProducts: filteredProducts
+  //   });
+  // }
   //---------------- logout -------------------------
 
   getNumberOfProducts(userDoc) {
@@ -167,13 +175,20 @@ class App extends Component {
     });
   }
 
+  // Handle Accepted or Rejected products
+
+  handleProductCheck(productStatus) {
+    this.setState({ productCheck: productStatus }, () =>
+      console.log("My State after productCheck function", this.state)
+    );
+  }
   //-----------seller form  --------------
   // handleSubmit(){
 
   // }
 
   render() {
-    const { currentUser, productData, cartTotal } = this.state;
+    const { currentUser, productData, cartTotal, productArray } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -203,7 +218,9 @@ class App extends Component {
             render={() => (
               <ProductList
                 currentUser={currentUser}
-                filteredProducts={this.state.filteredProducts}
+                filteredProducts={productArray.filter(oneProduct => {
+                  return oneProduct.category === "man";
+                })}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
               />
@@ -214,7 +231,9 @@ class App extends Component {
             render={() => (
               <ProductList
                 currentUser={currentUser}
-                filteredProducts={this.state.filteredProducts}
+                filteredProducts={productArray.filter(oneProduct => {
+                  return oneProduct.category === "women";
+                })}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
               />
@@ -240,6 +259,37 @@ class App extends Component {
               );
             }}
           />
+          <Route path="/pending-page" component={PendingPage} />
+          <Route
+            path="/see-products"
+            render={props => {
+              return (
+                <SeeProducts
+                  {...props}
+                  currentUser={currentUser}
+                  productCheck={this.state.productCheck}
+                />
+              );
+            }}
+          />
+
+          <Route path="/adminlistpage" component={AdminListPage} />
+          <Route path="/adminrefusedpage" component={AdminRefusedpage} />
+          <Route path="/adminacceptpage" component={AdminAcceptPage} />
+          <Route
+            path="/admindetailpage/:productId"
+            render={props => {
+              return (
+                <AdminDetailPage
+                  {...props}
+                  currentUser={currentUser}
+                  productCheck={event => this.handleProductCheck(event)}
+                />
+              );
+            }}
+          />
+          <Route path="/adminsettings" component={AdminSettings} />
+
           <Route
             path="/showcart"
             render={() => {

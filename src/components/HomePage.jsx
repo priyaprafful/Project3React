@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Search from "./SearchBar";
 import ProductList from "./ProductList";
+import { Link } from "react-router-dom";
 
 class HomePage extends Component {
   constructor(props) {
@@ -24,14 +25,24 @@ class HomePage extends Component {
         ) : (
           <div>
             <div>
-              <img src="" alt="man" />
+              <Link to="/product-list-man">
+                <img
+                  src="https://i.pinimg.com/originals/27/6f/88/276f88aef0ad1b5514509f7bfdcebd44.jpg"
+                  alt="man"
+                />
+              </Link>
             </div>
             <div>
-              <img src="" alt="women" />
+              <Link to="/product-list-women">
+                <img
+                  src="http://assets.myntassets.com/assets/images/1996368/2017/7/28/11501225258060-Rain--Rainbow-Women-Dresses-9391501225257859-1.jpg"
+                  alt="women"
+                />
+              </Link>
             </div>
-            <div>
+            {/* <div>
               <img src="" alt="Accesories" />
-            </div>
+            </div> */}
           </div>
         )}
       </section>

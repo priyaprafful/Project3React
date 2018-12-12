@@ -40,14 +40,14 @@ class NavBar extends Component {
                 Home
               </NavLink>
               <NavLink
-                onClick={() => this.props.changeGender("man")}
+                // onClick={() => this.props.changeGender("man")}
                 to="/product-list-man"
                 className="navbar-item"
               >
                 Man
               </NavLink>
               <NavLink
-                onClick={() => this.props.changeGender("women")}
+                // onClick={() => this.props.changeGender("women")}
                 to="/product-list-women"
                 className="navbar-item"
               >
@@ -55,6 +55,21 @@ class NavBar extends Component {
               </NavLink>
               <NavLink className="navbar-item" to="/seller-form">
                 Add Products
+              </NavLink>
+              <NavLink className="navbar-item" to="/see-products">
+                See Products
+              </NavLink>
+              <NavLink className="navbar-item" to="/adminlistpage">
+                Companies
+              </NavLink>
+              <NavLink className="navbar-item" to="/adminrefusedpage">
+                Refused Application
+              </NavLink>
+              <NavLink className="navbar-item" to="/adminacceptpage">
+                Accepted
+              </NavLink>
+              <NavLink className="navbar-item" to="/adminsettings">
+                Settings
               </NavLink>
             </div>
           </div>

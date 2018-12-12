@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 class SellerForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      sku: "",
+      category: "",
+      subcategory: "",
       name: "",
       brand: "",
       image: "",
       description: "",
       price: "",
-      size: ""
+      size: "",
+      isSubmitSuccessful: false
+      // isFreeShipping: "",
+      // selectValue: true
     };
   }
 
@@ -23,7 +30,7 @@ class SellerForm extends Component {
       .then(response => {
         console.log("Seller Form Page", response.data);
         const { userDoc } = response.data;
-        this.props.onUserChange(userDoc);
+        this.setState({ isSubmitSuccessful: true });
       })
       .catch(err => {
         console.log("SELLER FORM ERROR", err);
@@ -35,16 +42,48 @@ class SellerForm extends Component {
     // this.props.onSubmit({ name, brand, image, description, price, size });
     //when the form is submitted, you want the input fields to be empty.
     this.setState({
+      sku: "",
+      category: "",
+      subcategory: "",
       name: "",
       brand: "",
       image: "",
       description: "",
       price: "",
       size: ""
+      // isFreeShipping: ""
     });
   }
 
+  changeValue(event) {
+    console.log(event.target.value);
+    this.setState({ selectValue: event.target.value });
+  }
+  uploadImage(event) {
+    const { files } = event.target;
+    console.log("File SELECTED", files[0]);
+
+    // THE FORM DATA CLASS WILL FORMAT THE FILES FOR SENDIND TO OUR API
+    const uploadData = new FormData();
+    uploadData.append("fileSubmission", files[0]);
+    axios
+      .post("http://localhost:5555/api/upload-file", uploadData, {
+        withCredentials: true
+      })
+      .then(response => {
+        console.log("Upload Image", response.data);
+        this.setState({ image: response.data.fileUrl });
+      })
+      .catch(err => {
+        console.log("UPLOAD IMAGE ERROR", err);
+        alert("Sorry! SOMETHING WENT WRONG");
+      });
+  }
+
   render() {
+    if (this.state.isSubmitSuccessful) {
+      return <Redirect to="/see-products" />;
+    }
     console.log(this.state);
     return (
       <section>
@@ -139,16 +178,27 @@ class SellerForm extends Component {
           <label htmlFor="">
             Image:
             <input
-              value={this.state.image}
+              // value={this.state.image}
               //Adding the onChange updates the state every time there is a change in the input
-              onChange={event => this.setState({ image: event.target.value })}
-              type="text"
-              name="image"
-              placeholder=""
+              // onChange={event => this.setState({ image: event.target.value })}
+              onChange={event => this.uploadImage(event)}
+              type="file"
+              // name="image"
+              // placeholder=""
             />
           </label>
-          <label htmlFor="">
+          <img src={this.state.image} alt="" />
+          {/* <label htmlFor="">
             Is it Free Sihpping:
+            <select
+              className="u-full-width"
+              // onChange={this.handleOnChange()}
+              value={this.state.selectValue}
+              onChange={this.changeValue}
+            >
+              <option value={true}>Yes</option>
+              <option value={false}>No</option>
+            </select>
             <input
               value={this.state.isFreeShipping}
               onChange={event =>
@@ -158,7 +208,7 @@ class SellerForm extends Component {
               name="isFreeShipping"
               placeholder="Yes"
             />
-          </label>
+          </label> */}
           <button>Submit your application</button>
           <button>Add your product</button>
         </form>

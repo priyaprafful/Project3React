@@ -97,6 +97,7 @@ class ProductList extends Component {
           {/* <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image"/> */}
           {filteredProducts.map(oneProduct => {
             return (
+            
               <li key={oneProduct._id}>
                 <Link to={getPhoneUrl(oneProduct)}>
                   <img src={oneProduct.image} alt={oneProduct.name} />
