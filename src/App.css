@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9209f8fa9d8dadbc174a5633be3c1be8d39b958a
 /* CSS IMAGES COLUMN */
 div.gallery {
   border: 1px solid #ccc;
@@ -92,6 +96,10 @@ input[type=submit]:hover {
 .OrderForm h1{
   font-size: 40px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9209f8fa9d8dadbc174a5633be3c1be8d39b958a
 
 @media screen and (max-width: 600px) {
   .col-25, .col-75, input[type=submit] {

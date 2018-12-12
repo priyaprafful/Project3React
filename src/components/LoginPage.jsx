@@ -18,7 +18,7 @@ class LoginPage extends Component {
   handleSumbit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:5555/api/login", this.state, {
+      .post(process.env.REACT_APP_SERVER_URL + "/api/login", this.state, {
         withCredentials: true
       })
       .then(response => {

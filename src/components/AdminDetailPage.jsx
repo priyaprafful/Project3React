@@ -17,7 +17,8 @@ class AdminDetailPage extends Component {
     const { params } = this.props.match;
     axios
       .put(
-        `http://localhost:5555/api/products/${params.productId}/accept`,
+        process.env.REACT_APP_SERVER_URL +
+          `/api/products/${params.productId}/accept`,
         {},
         { withCredentials: true }
       )
@@ -38,7 +39,8 @@ class AdminDetailPage extends Component {
     const { params } = this.props.match;
     axios
       .put(
-        `http://localhost:5555/api/products/${params.productId}/reject`,
+        process.env.REACT_APP_SERVER_URL +
+          `/api/products/${params.productId}/reject`,
         {},
         { withCredentials: true }
       )
@@ -59,9 +61,12 @@ class AdminDetailPage extends Component {
     const { params } = this.props.match;
     console.log("inside mount");
     axios
-      .get(`http://localhost:5555/api/products/${params.productId}`, {
-        withCredentials: true
-      })
+      .get(
+        process.env.REACT_APP_SERVER_URL + `/api/products/${params.productId}`,
+        {
+          withCredentials: true
+        }
+      )
       .then(response => {
         console.log("Product Details", response.data);
         this.setState(response.data, () => this.props.productCheck(this.state));

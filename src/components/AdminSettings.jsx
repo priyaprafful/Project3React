@@ -13,7 +13,7 @@ class AdminSettings extends Component {
     // const { params } = this.props.match;
     console.log("inside mount");
     axios
-      .get(`http://localhost:5555/api/all-users`, {
+      .get(process.env.REACT_APP_SERVER_URL + `/api/all-users`, {
         withCredentials: true
       })
       .then(response => {
@@ -30,7 +30,7 @@ class AdminSettings extends Component {
   changeRole(role, id) {
     axios
       .put(
-        `http://localhost:5555/api/user/${id}`,
+        process.env.REACT_APP_SERVER_URL + `/api/user/${id}`,
         { userRole: role },
         {
           withCredentials: true

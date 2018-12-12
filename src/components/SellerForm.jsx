@@ -24,7 +24,7 @@ class SellerForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:5555/api/seller-form", this.state, {
+      .post(process.env.REACT_APP_SERVER_URL + "/api/seller-form", this.state, {
         withCredentials: true
       })
       .then(response => {
@@ -67,7 +67,7 @@ class SellerForm extends Component {
     const uploadData = new FormData();
     uploadData.append("fileSubmission", files[0]);
     axios
-      .post("http://localhost:5555/api/upload-file", uploadData, {
+      .post(process.env.REACT_APP_SERVER_URL + "/api/upload-file", uploadData, {
         withCredentials: true
       })
       .then(response => {

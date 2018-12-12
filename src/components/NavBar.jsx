@@ -6,7 +6,14 @@ class NavBar extends Component {
     super(props);
     this.state = { loggedInUser: this.props.currentUser };
   }
+
   render() {
+    console.log(this.props.currentUser);
+    const { loggedInUser } = this.state;
+    //const newArr = Object.values(currentUser);
+
+    console.log("-----", loggedInUser);
+
     return (
       <section className="NavBar">
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -37,9 +44,11 @@ class NavBar extends Component {
               <NavLink className="navbar-item" to="/seller-form">
                 Add Products
               </NavLink>
-              <NavLink className="navbar-item" to="/see-products">
-                See Products
-              </NavLink>
+              {this.props.currentUser && (
+                <NavLink className="navbar-item" to="/see-products">
+                  See Products
+                </NavLink>
+              )}
               <NavLink className="navbar-item" to="/adminlistpage">
                 Companies
               </NavLink>
@@ -52,6 +61,7 @@ class NavBar extends Component {
               <NavLink className="navbar-item" to="/adminsettings">
                 Settings
               </NavLink>
+              )
             </div>
           </div>
           {this.props.currentUser ? (

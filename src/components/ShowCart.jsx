@@ -1,30 +1,33 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 function getPhoneUrl(oneProduct) {
-    return `/product-details/${oneProduct.id}`;
-  }
-  
+  return `/product-details/${oneProduct.id}`;
+}
 
 class ShowCart extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-           
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-     removeFromCart(productId,name,image, price,event) {
-        event.preventDefault();
-        var productString  = productId+"|"+name+"|"+image+"|"+price;
-       if(this.props.currentUser!=null){
-          axios.post("http://localhost:5555/api/removeFromcart",{
+  removeFromCart(productId, name, image, price, event) {
+    event.preventDefault();
+    var productString = productId + "|" + name + "|" + image + "|" + price;
+    if (this.props.currentUser != null) {
+      axios
+        .post(
+          process.env.REACT_APP_SERVER_URL + "/api/removeFromcart",
+          {
             productString: productString,
-            price:price
-          },{ withCredentials: true }).then(response=> {
-            // window.location.reload(); // something else can be used, need to ask
+            price: price
+          },
+          { withCredentials: true }
+        )
+        .then(response => {
+          // window.location.reload(); // something else can be used, need to ask
           this.props.setCartData();
           })
           .catch(function (error) {
@@ -80,6 +83,9 @@ class ShowCart extends Component {
                 </section>
          );
     }
-}
+  }
+
  
+  
+
 export default ShowCart;

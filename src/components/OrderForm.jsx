@@ -1,57 +1,59 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 
-
-
 class OrderForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            shippingName:"",
-            shippingAddress:"",
-            shippingMobile:"",
-            orderSucces:false,
-            orderId:""
+  constructor(props) {
+    super(props);
+    this.state = {
+      shippingName: "",
+      shippingAddress: "",
+      shippingMobile: "",
+      orderSucces: false,
+      orderId: ""
+    };
+  }
 
-         }
+  genericSync(event) {
+    const { name, value } = event.target;
+    //console.log("name and value are ", name, value);
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    if (this.props.currentUser != null) {
+      //console.log("productData  in order form : ",this.props.productData);
+      var productString = JSON.stringify(this.props.productData);
+
+      axios
+        .post(
+          process.env.REACT_APP_SERVER_URL + "/api/place-order",
+          {
+            shippingName: this.state.shippingName,
+            shippingAddress: this.state.shippingAddress,
+            shippingMobile: this.state.shippingMobile,
+            orderedProducts: productString
+          },
+          { withCredentials: true }
+        )
+        .then(response => {
+          //console.log("response after placed order :::", response.data.orderId);
+          //var orderId =  response.data.orderId;
+          //var redirectionURL = "/orderSuccess"+"?o="+orderId;
+          //pass paramater on redirect
+          this.props.setCartToZero();
+          this.setState({ orderSucces: true, orderId: response.data.orderId });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log("you need to login to add product");
+      return <Redirect to="/login-page" />;
     }
-
-    genericSync(event) {
-        const { name, value } = event.target;
-        //console.log("name and value are ", name, value);
-        this.setState({ [name]: value });
-      }
-    
-    handleSubmit(event) {
-        event.preventDefault();
-        if(this.props.currentUser!=null){
-            //console.log("productData  in order form : ",this.props.productData);
-            var productString = JSON.stringify(this.props.productData);
-
-            axios.post("http://localhost:5555/api/place-order",{
-                shippingName:this.state.shippingName,
-                shippingAddress:this.state.shippingAddress,
-                shippingMobile:this.state.shippingMobile,
-                orderedProducts:productString
-                },{ withCredentials: true })
-                .then((response)=> {
-                    //console.log("response after placed order :::", response.data.orderId);
-                    //var orderId =  response.data.orderId;
-                    //var redirectionURL = "/orderSuccess"+"?o="+orderId;
-                    //pass paramater on redirect
-                    this.props.setCartToZero();
-                    this.setState({orderSucces:true, orderId:response.data.orderId});
-                    
-               }).catch( (error)=> {
-                console.log(error);
-               });
-            } else{
-            console.log("you need to login to add product");
-            return <Redirect to='/login-page'/>;
-            }
-           return <Redirect to='/'/>; 
-    }
+    return <Redirect to ="/"/>
+}
      
     
     render() { 
@@ -95,6 +97,7 @@ class OrderForm extends Component {
             </section>
          );
     }
-}
+
+   };
 
 export default OrderForm;

@@ -45,13 +45,15 @@ class App extends Component {
   // ------------------ CHECK USER ANG GET PRODUCTS ------------------
   componentDidMount() {
     axios
-      .get("http://localhost:5555/api/checkuser", { withCredentials: true })
+      .get(process.env.REACT_APP_SERVER_URL + "/api/checkuser", {
+        withCredentials: true
+      })
       .then(response => {
         //console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
         this.setCartData();
-        return axios.get("http://localhost:5555/api/products");
+        return axios.get(process.env.REACT_APP_SERVER_URL + "/api/products");
       })
       .then(response => {
         let allMenProduct = response.data.filter(oneProduct => {
@@ -116,7 +118,7 @@ class App extends Component {
     } else {
       axios
         .post(
-          "http://localhost:5555/api/addtocart",
+          process.env.REACT_APP_SERVER_URL + "/api/addtocart",
           {
             key: productId,
             name: name,
@@ -138,7 +140,7 @@ class App extends Component {
   setCartData() {
     axios
       .post(
-        "http://localhost:5555/api/myproducts",
+        process.env.REACT_APP_SERVER_URL + "/api/myproducts",
         {},
         { withCredentials: true }
       )
@@ -161,7 +163,9 @@ class App extends Component {
 
   logoutClick() {
     axios
-      .delete("http://localhost:5555/api/logout", { withCredentials: true })
+      .delete(process.env.REACT_APP_SERVER_URL + "/api/logout", {
+        withCredentials: true
+      })
       .then(this.syncCurrentUser(null))
       .catch(err => {
         console.log("LOGOUT ERROR", err);
