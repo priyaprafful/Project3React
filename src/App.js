@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
-// import logo from "./logo.svg";
 import "./App.css";
 import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
 import axios from "axios";
-// import SearchField from "react-search-field";
-//import Search from "./components/SearchBar";
 
 import ProductList from "./components/ProductList";
 import NavBar from "./components/NavBar";
@@ -21,6 +18,8 @@ import AdminDetailPage from "./components/AdminDetailPage";
 import AdminRefusedpage from "./components/AdminRefusedPage";
 import AdminAcceptPage from "./components/AdminAcceptPage";
 import AdminSettings from "./components/AdminSettings";
+import OrderForm from "./components/OrderForm";
+import SuccessPage from "./SuccessPage";
 
 class App extends Component {
   constructor(props) {
@@ -29,6 +28,8 @@ class App extends Component {
       myproducts: [],
       currentUser: null,
       searchString: "",
+      menProducts: [],
+      womenProduct: [],
       filteredProducts: [],
       productArray: [],
       category: "women",
@@ -36,7 +37,8 @@ class App extends Component {
       cartProductNumbers: 0,
       productData: [],
       cartTotal: 0,
-      productCheck: []
+      productCheck: [],
+      shouldLogin: false
     };
   }
 
@@ -45,24 +47,30 @@ class App extends Component {
     axios
       .get("http://localhost:5555/api/checkuser", { withCredentials: true })
       .then(response => {
-        console.log("CHECK USER", response.data);
+        //console.log("CHECK USER", response.data);
         const { userDoc } = response.data;
         this.syncCurrentUser(userDoc);
-        this.getNumberOfProducts(userDoc);
+        this.setCartData();
         return axios.get("http://localhost:5555/api/products");
       })
       .then(response => {
-        //console.log("Product-List",response.data)
+        let allMenProduct = response.data.filter(oneProduct => {
+          return oneProduct.category === "man";
+        });
+        let allwomenProducts = response.data.filter(oneProduct => {
+          return oneProduct.category === "women";
+        });
+
         this.setState({
-          productArray: response.data
+          productArray: response.data,
+          menProducts: allMenProduct,
+          womenProduct: allwomenProducts
         });
       })
       .catch(err => {
         console.log("CHECK USER ERROR or product List error", err);
         alert("Sorry!Something went wrong");
       });
-
-    console.log("user is set after mount :::::", this.state.currentUser);
   }
 
   //----------------set state of current user -------------
@@ -73,7 +81,10 @@ class App extends Component {
   //-------------- set state of search result ----------
 
   syncFilteredArray = filteredArray => {
-    this.setState({ filteredProducts: filteredArray });
+    //console.log("filteredArray received in app.js", filteredArray)
+    this.setState({ menProducts: filteredArray }, () =>
+      console.log("State APP JS after setstate", this.state)
+    );
   };
 
   syncSelectCheckBox = oneSIZE => {
@@ -94,27 +105,37 @@ class App extends Component {
         return selecteCheckBox.includes(onesize);
       });
     });
-    console.log(selectSize);
+    //console.log(selectSize);
     return selectSize;
   }
 
-  //------------- change gender ------------------
-  // changeGender(gender) {
-  //   // event.preventDefault();
-  //   console.log("change gender called", gender);
-  //   const { productArray } = this.state;
-  //   const filteredProducts = productArray.filter(oneProduct => {
-  //     return oneProduct.category === gender;
-  //   });
-  //   this.setState({
-  //     category: gender,
-  //     filteredProducts: filteredProducts
-  //   });
-  // }
-  //---------------- logout -------------------------
+  addToCart = (productId, name, image, price, event) => {
+    event.preventDefault();
+    if (this.state.currentUser === null) {
+      this.setState({ shouldLogin: true });
+    } else {
+      axios
+        .post(
+          "http://localhost:5555/api/addtocart",
+          {
+            key: productId,
+            name: name,
+            image: image,
+            price: price
+          },
+          { withCredentials: true }
+        )
+        .then(response => {
+          this.setCartData();
+          // window.location.reload(); // something else can be used, need to ask
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  };
 
-  getNumberOfProducts(userDoc) {
-    console.log("inside getNumberOfProducts()", this.state.currentUser);
+  setCartData() {
     axios
       .post(
         "http://localhost:5555/api/myproducts",
@@ -122,26 +143,21 @@ class App extends Component {
         { withCredentials: true }
       )
       .then(response => {
-        console.log("complete jsoon is ::::: ", response.data);
-        console.log(
-          "numberof products in app  :::::::::",
-          response.data.numbers
-        );
-        console.log(" products in app  :::::::::", response.data.products);
-
         var result = JSON.parse(response.data.products)["Products"];
-        console.log(" products in app  after parse :::::::::", result);
-        this.setState({ productData: result });
-        console.log("prodcts data    ::::", this.state.productData);
-        this.setState({ cartProductNumbers: response.data.numbers });
-        console.log("cart total before set is ::::: ", this.state.cartTotal);
-        this.setState({ cartTotal: response.data.cartTotal });
-        console.log("cart total after set is ::::: ", this.state.cartTotal);
+        this.setState({
+          productData: result,
+          cartProductNumbers: response.data.numbers,
+          cartTotal: response.data.cartTotal
+        });
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log(error);
       });
   }
+
+  setCartToZero = () => {
+    this.setState({ cartProductNumbers: 0 });
+  };
 
   logoutClick() {
     axios
@@ -157,9 +173,7 @@ class App extends Component {
 
   handleSearch(event) {
     const { value } = event.target;
-    //console.log(value);
-    console.log(this.state);
-    // console.log(filteredProducts);
+
     const filteredArray = this.state.productArray.filter(oneProduct => {
       const lowerValue = value.toLowerCase();
       return (
@@ -188,7 +202,15 @@ class App extends Component {
   // }
 
   render() {
-    const { currentUser, productData, cartTotal, productArray } = this.state;
+    const {
+      currentUser,
+      productData,
+      cartTotal,
+      productArray,
+      menProducts,
+      womenProduct
+    } = this.state;
+    //console.log("Cart total in APP.JS before return", cartTotal)
     return (
       <div className="App">
         <header className="App-header">
@@ -197,7 +219,6 @@ class App extends Component {
             currentUser={currentUser}
             cartProductNumbers={this.state.cartProductNumbers}
             logoutClick={() => this.logoutClick()}
-            changeGender={gender => this.changeGender(gender)}
           />
         </header>
         <Switch>
@@ -210,6 +231,8 @@ class App extends Component {
                 filteredProducts={this.state.filteredProducts}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
+                addToCart={this.addToCart}
+                shouldLogin={this.state.shouldLogin}
               />
             )}
           />
@@ -218,11 +241,15 @@ class App extends Component {
             render={() => (
               <ProductList
                 currentUser={currentUser}
-                filteredProducts={productArray.filter(oneProduct => {
-                  return oneProduct.category === "man";
-                })}
+                // filteredProducts={productArray.filter(oneProduct => {
+                //   return oneProduct.category === "man";
+                // })}
+                filteredProducts={menProducts}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
+                addToCart={this.addToCart}
+                shouldLogin={this.state.shouldLogin}
+                sortByPriceDsc={this.sortByPriceDsc}
               />
             )}
           />
@@ -231,17 +258,27 @@ class App extends Component {
             render={() => (
               <ProductList
                 currentUser={currentUser}
-                filteredProducts={productArray.filter(oneProduct => {
-                  return oneProduct.category === "women";
-                })}
+                // filteredProducts={productArray.filter(oneProduct => {
+                //   return oneProduct.category === "women";
+                // })}
+                filteredProducts={womenProduct}
                 syncFilteredArray={this.syncFilteredArray}
                 syncSelectCheckBox={this.syncSelectCheckBox}
+                addToCart={this.addToCart}
+                shouldLogin={this.state.shouldLogin}
               />
             )}
           />
           <Route
             path="/product-details/:productId"
-            component={ProductDetails}
+            render={({ match }) => (
+              <ProductDetails
+                addToCart={this.addToCart}
+                match={match}
+                shouldLogin={this.state.shouldLogin}
+                filteredProducts={this.state.filteredProducts}
+              />
+            )}
           />
           <Route
             path="/seller-form"
@@ -298,6 +335,7 @@ class App extends Component {
                   currentUser={currentUser}
                   productData={productData}
                   cartTotal={cartTotal}
+                  setCartData={cart => this.setCartData(cart)}
                 />
               );
             }}
@@ -309,6 +347,30 @@ class App extends Component {
                 <LoginPage
                   currentUser={this.state.currentUser}
                   onUserChange={userDoc => this.syncCurrentUser(userDoc)}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/order-form"
+            render={() => {
+              return (
+                <OrderForm
+                  currentUser={this.state.currentUser}
+                  productData={this.state.productData}
+                  setCartToZero={this.setCartToZero}
+                  // onUserChange={userDoc => this.syncCurrentUser(userDoc)}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/orderSuccess"
+            render={() => {
+              return (
+                <SuccessPage
+                  currentUser={this.state.currentUser}
+                  // onUserChange={userDoc => this.syncCurrentUser(userDoc)}
                 />
               );
             }}

@@ -21,6 +21,8 @@ class HomePage extends Component {
             filteredProducts={this.props.filteredProducts}
             syncFilteredArray={this.props.syncFilteredArray}
             syncSelectCheckBox={this.props.syncSelectCheckBox}
+            addToCart={this.props.addToCart}
+            shouldLogin={this.props.shouldLogin}
           />
         ) : (
           <div>

@@ -1,6 +1,7 @@
 .App {
   text-align: center;
 }
+<<<<<<< HEAD
 
 /* CSS IMAGES COLUMN */
 div.gallery {
@@ -54,26 +55,31 @@ div.desc {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
 }
+=======
+>>>>>>> 6686a6d728c52f9345fb7ba30beee31906b4123d
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+#mycart{
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 70%;
   }
-  to {
-    transform: rotate(360deg);
-  } */
+
+  #mycart img{
+    width:20%;
+    margin-left: 5%;
+  }
+  #mycart th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+/* .Order-form {
+  width: 609px;
+  margin: 5px 0;
+  background-color: #edd98b;
+  padding: 2px;
+  height: 574px;
+  margin-right: 2.5%;
+} */

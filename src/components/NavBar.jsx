@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import MyCart from "../components/MyCart";
 
 class NavBar extends Component {
   constructor(props) {
@@ -20,37 +19,19 @@ class NavBar extends Component {
                 // height="28"
               />
             </NavLink>
-
-            <a
-              role="button"
-              className="navbar-burger burger"
-              aria-label="menu"
-              aria-expanded="false"
-              data-target="navbarBasicExample"
-              href="/"
-            >
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-              <span aria-hidden="true" />
-            </a>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
           </div>
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
               <NavLink className="navbar-item" exact to="/home">
                 Home
               </NavLink>
-              <NavLink
-                // onClick={() => this.props.changeGender("man")}
-                to="/product-list-man"
-                className="navbar-item"
-              >
+              <NavLink to="/product-list-man" className="navbar-item">
                 Man
               </NavLink>
-              <NavLink
-                // onClick={() => this.props.changeGender("women")}
-                to="/product-list-women"
-                className="navbar-item"
-              >
+              <NavLink to="/product-list-women" className="navbar-item">
                 Women
               </NavLink>
               <NavLink className="navbar-item" to="/seller-form">
