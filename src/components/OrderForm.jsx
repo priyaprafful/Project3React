@@ -62,27 +62,31 @@ class OrderForm extends Component {
        return ( 
           <section>
               
-              <div className="Order-form">
-                <form onSubmit={event => this.handleSubmit(event)} className="OrderForm">
-                <h1>Fill Your Details</h1>
+              <div className="OrderForm">
+                <form onSubmit={event => this.handleSubmit(event)}>
+                <h1>Your Shipping Address</h1>
                  <div className="row">
 
-
+                 
                  <div className="col-25">
-                   <label>Name: </label>
-                   <input type="text" value={this.state.name} placeholder="Your Name" name="shippingName" onChange={event => this.genericSync(event)} />
+                      <label>Name </label>
                  </div>
-
-
+                 <div className="col-75">
+                    <input type="text" value={this.state.name} placeholder="Your Name" name="shippingName" onChange={event => this.genericSync(event)} />
+                 </div>
                 <div className="col-25">
-                     <label>Address: </label>
-                     <input type="text" value={this.state.address} placeholder="Your shiiping Address" name="shippingAddress" onChange={event => this.genericSync(event)} />
+                     <label>Address</label>
+                </div>
+                <div className="col-75">     
+                    <input type="text" value={this.state.address} placeholder="Your shiiping Address" name="shippingAddress" onChange={event => this.genericSync(event)} />
                 </div>
                 <div className="col-25">
-                    <label>Mobile No:</label>
+                      <label>Mobile No</label>
+                 </div>
+                <div className="col-75"> 
                     <input type="number" value={this.state.mobileno} placeholder="064646464" name="shippingMobile"  onChange={event => this.genericSync(event)} />
                 </div>
-                <div class="row">
+                <div className="row">
                     <input type="submit" value="Place your order"/>
                 </div>
                 </div>

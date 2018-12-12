@@ -9,8 +9,10 @@ class SuccessPage extends Component {
         
         return ( 
             <section>
+            <div className="SuccessPage">
             <h1>Successfully Order Placed </h1>
             <p>Your Id is</p>
+            </div>
             </section> 
          );
         

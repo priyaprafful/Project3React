@@ -39,16 +39,20 @@ class ShowCart extends Component {
       
     render() { 
         const {productData,cartTotal} = this.props;
+        console.log("this is my product data",productData)
         return ( 
             <section className="MyCart">
                 <h1>My Cart</h1>
+
                 <table id="mycart">
-                    <tbody>
+                <tbody>
+            {productData.length > 0  && 
                         <tr>
                             <th>Product</th>
                             <th>Name</th>
                             <th>Price</th>
-                    </tr>
+                    </tr> }
+                
                         
                         {productData.map(oneProduct => {
                         return (

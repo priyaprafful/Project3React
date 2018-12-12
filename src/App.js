@@ -19,7 +19,7 @@ import AdminRefusedpage from "./components/AdminRefusedPage";
 import AdminAcceptPage from "./components/AdminAcceptPage";
 import AdminSettings from "./components/AdminSettings";
 import OrderForm from "./components/OrderForm";
-import SuccessPage from "./SuccessPage";
+import SuccessPage from "./components/SuccessPage";
 
 class App extends Component {
   constructor(props) {
