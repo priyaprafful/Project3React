@@ -15,7 +15,9 @@ class AdminListPage extends Component {
   }
   componentDidMount() {
     axios
-      .get("http://localhost:5555/api/adminlistpage", { withCredentials: true })
+      .get(process.env.REACT_APP_SERVER_URL + "/api/adminlistpage", {
+        withCredentials: true
+      })
       .then(response => {
         console.log("ADMIN LIST", response.data);
         this.setState({ adminlist: response.data });

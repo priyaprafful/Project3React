@@ -18,7 +18,7 @@ class SignUpPage extends Component {
   handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:5555/api/signup", this.state, {
+      .post(process.env.REACT_APP_SERVER_URL + "/api/signup", this.state, {
         withCredentials: true
       })
       .then(response => {

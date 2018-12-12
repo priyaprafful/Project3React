@@ -12,7 +12,7 @@ class SeeProducts extends Component {
     // const { params } = this.props.match;
     console.log("inside mount");
     axios
-      .get(`http://localhost:5555/api/see-products`, {
+      .get(process.env.REACT_APP_SERVER_URL + `/api/see-products`, {
         withCredentials: true
       })
       .then(response => {

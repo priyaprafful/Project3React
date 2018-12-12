@@ -13,10 +13,12 @@ class ProductDetails extends Component {
     const { params } = this.props.match;
     console.log("inside mount");
     axios
-      .get(`http://localhost:5555/api/products/${params.productId}`, {
-    
-        withCredentials: true
-      })
+      .get(
+        process.env.REACT_APP_SERVER_URL + `/api/products/${params.productId}`,
+        {
+          withCredentials: true
+        }
+      )
       .then(response => {
         console.log("Product Details", response.data);
         this.setState(response.data);
@@ -26,11 +28,11 @@ class ProductDetails extends Component {
         alert("Sorry! Something went wrong.");
       });
   }
-  
+
   render() {
-    const { _id,image, name, brand, price, size, description } = this.state;
-    if(this.props.shouldLogin){
-      return <Redirect to="/login-page"/>
+    const { _id, image, name, brand, price, size, description } = this.state;
+    if (this.props.shouldLogin) {
+      return <Redirect to="/login-page" />;
     }
     return (
       <section className="ProductDetails">
@@ -42,13 +44,17 @@ class ProductDetails extends Component {
         </p>
         <b>€{price}</b>
         <h4>{size}</h4>
-        <button onClick={(event) => this.props.addToCart(_id,name,image,price, event)}>Add to cart</button>
+        <button
+          onClick={event =>
+            this.props.addToCart(_id, name, image, price, event)
+          }
+        >
+          Add to cart
+        </button>
         <p>{description}</p>
-        
-          <h2>people may also like</h2>
-          
-          
-        </section>
+
+        <h2>people may also like</h2>
+      </section>
     );
   }
 }
