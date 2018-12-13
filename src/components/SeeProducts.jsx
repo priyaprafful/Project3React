@@ -9,8 +9,7 @@ class SeeProducts extends Component {
     this.state = {};
   }
   componentDidMount() {
-    // const { params } = this.props.match;
-    console.log("inside mount");
+
     axios
       .get(process.env.REACT_APP_SERVER_URL + `/api/see-products`, {
         withCredentials: true

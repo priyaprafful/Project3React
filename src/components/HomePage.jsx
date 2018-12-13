@@ -11,7 +11,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <section className="HomePage">
+      <section className="SearchBar">
         <Search
           searchFunction={event => this.props.handleSearch(event)}
           value={this.props.searchString}
@@ -25,27 +25,27 @@ class HomePage extends Component {
             shouldLogin={this.props.shouldLogin}
           />
         ) : (
-          <div>
+          <div className="HomePage">
             <div>
               <Link to="/product-list-man">
                 <img
-                  src="https://i.pinimg.com/originals/27/6f/88/276f88aef0ad1b5514509f7bfdcebd44.jpg"
+                  src="https://4.imimg.com/data4/KD/PY/IMOB-29919264/img_20170319_112304-500x500.jpg"
                   alt="man"
                 />
               </Link>
+              <img src="https://www.khattemeethedesires.com/wp-content/uploads/fashion-accessories-1.jpg" alt="Accesories" />
             </div>
-            <div>
+             <div>
               <Link to="/product-list-women">
                 <img
                   src="http://assets.myntassets.com/assets/images/1996368/2017/7/28/11501225258060-Rain--Rainbow-Women-Dresses-9391501225257859-1.jpg"
-                  alt="women"
+                  alt="women" width="99%"
                 />
               </Link>
             </div>
-            {/* <div>
-              <img src="" alt="Accesories" />
-            </div> */}
+           
           </div>
+          
         )}
       </section>
     );

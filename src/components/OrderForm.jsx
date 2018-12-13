@@ -38,10 +38,7 @@ class OrderForm extends Component {
           { withCredentials: true }
         )
         .then(response => {
-          //console.log("response after placed order :::", response.data.orderId);
-          //var orderId =  response.data.orderId;
-          //var redirectionURL = "/orderSuccess"+"?o="+orderId;
-          //pass paramater on redirect
+        //pass paramater on redirect
           this.props.setCartToZero();
           this.setState({ orderSucces: true, orderId: response.data.orderId });
         })
@@ -64,9 +61,9 @@ class OrderForm extends Component {
        return ( 
           <section>
               
-              <div className="OrderForm">
+              <div className="OrderForm has-background-light">
                 <form onSubmit={event => this.handleSubmit(event)}>
-                <h1>Your Shipping Address</h1>
+                <h1>Your Shipping Information</h1>
                  <div className="row">
 
                  
@@ -89,7 +86,7 @@ class OrderForm extends Component {
                     <input type="number" value={this.state.mobileno} placeholder="064646464" name="shippingMobile"  onChange={event => this.genericSync(event)} />
                 </div>
                 <div className="row">
-                    <input type="submit" value="Place your order"/>
+                    <input type="submit" value="Place your order" className="button is-success orderformbtn"/>
                 </div>
                 </div>
                 </form>

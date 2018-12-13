@@ -85,9 +85,8 @@ class NavBar extends Component {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-               
-                  <NavLink to="/showcart" >
-                 My cart : {this.props.cartProductNumbers}
+                  <NavLink to="/showcart">
+                  <i className="fas fa-cart-plus cartlogo"></i> -{this.props.cartProductNumbers}
                   </NavLink>
                  
                   <b>{this.props.currentUser.fullName}</b>

@@ -10,13 +10,13 @@ class Search extends Component {
     console.log(this.state);
     const { searchFunction, value } = this.props;
     return (
-      <form>
+      <form className="Search">
         <label>
-          Search Item :
+          Search  
           <input
             type="text"
             name="search"
-            placeholder="Search your item"
+            placeholder="Search your product"
             onChange={event => searchFunction(event)}
             value={value}
           />
