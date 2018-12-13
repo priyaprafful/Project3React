@@ -1,10 +1,6 @@
 .App {
   text-align: center;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 9209f8fa9d8dadbc174a5633be3c1be8d39b958a
 /* CSS IMAGES COLUMN */
 div.gallery {
   border: 1px solid #ccc;
@@ -52,54 +48,73 @@ div.desc {
   display: table;
   clear: both;
 }
+
+/* home page css */
+.HomePage{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5%;
+  margin:0 20% 
+ 
+  
+}
+.SearchBar{
+  border: 10px;
+  
+}
+.SearchBar input[type=text] {
+  border: 1px solid #ccc; 
+  width: 20%; 
+  margin-top:3%;
+  padding:10px;
+  border-radius:20px;
+
+}
+.Search label{
+    font-size: 20px;
+    margin-right:20px;
+}  
+    
+        
+
+
 /* Order form css */
-input[type=text] {
+.OrderForm input[type=text] {
   width: 40%;
   padding: 12px;
   border: 5px solid #ccc;
   border-radius: 4px;
   resize: vertical;
 }
-input[type=number] {
+.OrderForm input[type=number] {
   width: 40%;
   padding: 12px;
   border: 4px solid #ccc;
   border-radius: 4px;
   resize: vertical;
 }
-label {
+.OrderForm label {
   padding: 12px 12px 12px 0;
   display: inline-block;
   font-size: 30px;
 }
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 20px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top:20px;
-  margin-left:50%;
- 
-  
-}
-input[type=submit]:hover {
-  background-color: #45a049;
-}
+
+
+
+
+
+
 .OrderForm{
   margin-top:5%;
-  background-color: burlywood;
   margin-left: 20%;
   margin-right: 20%;
 }
 .OrderForm h1{
   font-size: 40px;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 9209f8fa9d8dadbc174a5633be3c1be8d39b958a
+.orderformbtn{
+  margin-top: 20px;
+}
 
 @media screen and (max-width: 600px) {
   .col-25, .col-75, input[type=submit] {
@@ -110,7 +125,60 @@ input[type=submit]:hover {
 
 /* order form css finish */
 
+
+/* show cart css */
+
+.mycart th, td {
+  text-align: left;
+  padding: 8px;
+  margin-left: 40px;
+}
+
+
+
+.mycart img{
+  width:30%;
+} 
+table {
+  border-collapse: collapse;
+  width: 20%;
+  margin: 0 auto;
+  margin-top: 2%;
+ }
+ .table.is-fullwidth {
+  width: 50%;
+}
+ 
+ .MyCart h1{
+   font-size: 30px;
+   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   margin: 40px auto;
+ }
+ 
+ 
+
 .SuccessPage{
   margin-top: 5%;
 }
+
+.SuccessPage h1{
+  font-size: 40px;
+ 
+
+}
+.SuccessPage p{
+  font-size: 40px;
+
+}
+.cartlogo{
+  width: 15%;
+  margin-right: 10px;
+  height: 20px;
+  font-size: 20px;
+}
+
+
+
+
+
 

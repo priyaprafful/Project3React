@@ -44,6 +44,8 @@ class App extends Component {
 
   // ------------------ CHECK USER ANG GET PRODUCTS ------------------
   componentDidMount() {
+    console.log("process env",process.env.REACT_APP_SERVER_URL);
+
     axios
       .get(process.env.REACT_APP_SERVER_URL + "/api/checkuser", {
         withCredentials: true

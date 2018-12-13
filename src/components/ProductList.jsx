@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import FilterProduct from "../components/FilterProduct.js";
+
+
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
@@ -61,8 +62,10 @@ class ProductList extends Component {
     }
     return (
       <section>
+        
         <h1>Choose your product</h1>
-        <FilterProduct syncSelectCheckBox={this.props.syncSelectCheckBox} />
+        
+        
         <button onClick={event => this.sortByPriceDsc(event)}>
           lowest To highest price
         </button>

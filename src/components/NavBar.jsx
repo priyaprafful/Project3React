@@ -61,7 +61,7 @@ class NavBar extends Component {
               <NavLink className="navbar-item" to="/adminsettings">
                 Settings
               </NavLink>
-              )
+              
             </div>
           </div>
           {this.props.currentUser ? (
@@ -69,7 +69,7 @@ class NavBar extends Component {
               <div className="navbar-item">
                 <div className="buttons">
                   <NavLink to="/showcart">
-                    Mycart -{this.props.cartProductNumbers}
+                  <i className="fas fa-cart-plus cartlogo"></i> -{this.props.cartProductNumbers}
                   </NavLink>
                   <b>{this.props.currentUser.fullName}</b>
                   <button
