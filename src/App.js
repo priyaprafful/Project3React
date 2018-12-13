@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { Redirect } from "react-router";
 import "./App.css";
+
 import SignUpPage from "./components/SignUpPage";
 import LoginPage from "./components/LoginPage";
 import axios from "axios";
@@ -286,15 +288,21 @@ class App extends Component {
           />
           <Route
             path="/seller-form"
-            // onSubmit={this.handleSubmit}
-            component={SellerForm}
+            render={()=>(
+              currentUser ? 
+              (<SellerForm
+                         
+              currentUser={currentUser}
+              />) :
+              (<Redirect to="/login-page" />)
+            )}
           />
           <Route
             path="/signup-page"
             render={() => {
               return (
                 <SignUpPage
-                  currentUser={this.state.currentUser}
+                  currentUser={currentUser}
                   onUserChange={userDoc => this.syncCurrentUser(userDoc)}
                 />
               );
@@ -380,10 +388,18 @@ class App extends Component {
             }}
           />
         </Switch>
+{/* <div>
 
-        <footer>
-          <p>Made by Priyanka and Harnit at Ironhack</p>
-        </footer>
+        <footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>Bulma</strong> by <a href="https://jgthms.com">Jeremy Thomas</a>. The source code is licensed
+      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+      is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+    </p>
+  </div>
+</footer>
+</div> */}
       </div>
     );
   }

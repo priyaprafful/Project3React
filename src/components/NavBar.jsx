@@ -10,9 +10,34 @@ class NavBar extends Component {
   render() {
     console.log(this.props.currentUser);
     const { loggedInUser } = this.state;
+    const {currentUser} = this.props;
     //const newArr = Object.values(currentUser);
 
     console.log("-----", loggedInUser);
+
+    let navLinks;
+
+    if(currentUser && currentUser.role === "admin"){
+      navLinks = (
+      <React.Fragment>
+        <NavLink className="navbar-item" to="/adminlistpage">
+          Companies
+        </NavLink>
+        <NavLink className="navbar-item" to="/adminrefusedpage">
+          Refused Application
+        </NavLink>
+        <NavLink className="navbar-item" to="/adminacceptpage">
+          Accepted
+        </NavLink>
+        <NavLink className="navbar-item" to="/adminsettings">
+          Settings
+        </NavLink>
+      </React.Fragment>)
+    } else if (currentUser && currentUser.role === "seller"){
+      navLinks = <NavLink className="navbar-item" to="/see-products">
+      See Products
+    </NavLink>
+    }
 
     return (
       <section className="NavBar">
@@ -41,36 +66,26 @@ class NavBar extends Component {
               <NavLink to="/product-list-women" className="navbar-item">
                 Women
               </NavLink>
-              <NavLink className="navbar-item" to="/seller-form">
+                      
+              <NavLink 
+               shouldLogin={this.props.shouldLogin}     
+              className="navbar-item" to="/seller-form" >
                 Add Products
               </NavLink>
-              {this.props.currentUser && (
-                <NavLink className="navbar-item" to="/see-products">
-                  See Products
-                </NavLink>
-              )}
-              <NavLink className="navbar-item" to="/adminlistpage">
-                Companies
-              </NavLink>
-              <NavLink className="navbar-item" to="/adminrefusedpage">
-                Refused Application
-              </NavLink>
-              <NavLink className="navbar-item" to="/adminacceptpage">
-                Accepted
-              </NavLink>
-              <NavLink className="navbar-item" to="/adminsettings">
-                Settings
-              </NavLink>
-              )
+              {navLinks}
+            
+      
             </div>
           </div>
           {this.props.currentUser ? (
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
-                  <NavLink to="/showcart">
-                    Mycart -{this.props.cartProductNumbers}
+               
+                  <NavLink to="/showcart" >
+                 My cart : {this.props.cartProductNumbers}
                   </NavLink>
+                 
                   <b>{this.props.currentUser.fullName}</b>
                   <button
                     onClick={() => this.props.logoutClick()}

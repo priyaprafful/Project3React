@@ -84,12 +84,30 @@ class SellerForm extends Component {
     if (this.state.isSubmitSuccessful) {
       return <Redirect to="/see-products" />;
     }
+    if(this.props.shouldLogin){
+      return <Redirect to="/login-page"/>
+    }
+          console.log(this.props.currentUser)
+
+    let submitapp;
+    if (this.props.currentUser && this.props.currentUser.isVerified === "notverified" ){
+      submitapp = <button  className="button is-block is-info is-large is-fullwidth">Submit your application</button>
+    } else {
+      submitapp = <button  className="button is-block is-info is-large is-fullwidth">Add your product</button>
+    }
+
     console.log(this.state);
     return (
-      <section>
-        <h1>Submit your brand</h1>
+      <section className="hero has-background-light is-success is-fullheight">
+       <div class="hero-body">
+        <div class="container has-text-centered">
+        <div class="column is-4 is-offset-4">
+        <h3 className="title has-text-grey">Submit your brand</h3>
+        <div className="box">
         <form onSubmit={event => this.handleSubmit(event)}>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             SKU:
             <input
               value={this.state.sku}
@@ -97,9 +115,14 @@ class SellerForm extends Component {
               type="number"
               name="sku"
               placeholder="12345"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             Category:
             <input
               value={this.state.category}
@@ -109,9 +132,14 @@ class SellerForm extends Component {
               type="text"
               name="category"
               placeholder="women or man"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             SubCategory:
             <input
               value={this.state.subcategory}
@@ -121,9 +149,14 @@ class SellerForm extends Component {
               type="text"
               name="subcategory"
               placeholder="shirt or dresses"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             Brand:
             <input
               value={this.state.brand}
@@ -131,9 +164,14 @@ class SellerForm extends Component {
               type="text"
               name="brand"
               placeholder="Lacoste"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             Name:
             <input
               value={this.state.name}
@@ -141,9 +179,14 @@ class SellerForm extends Component {
               type="text"
               name="name"
               placeholder="Lacoste - Shoes"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             Price:
             <input
               value={this.state.price}
@@ -151,9 +194,14 @@ class SellerForm extends Component {
               type="number"
               name="price"
               placeholder="60 €"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             Size:
             <input
               value={this.state.size}
@@ -161,9 +209,14 @@ class SellerForm extends Component {
               type="text"
               name="size"
               placeholder="S"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
+          <div class="field">
+          <div class="control">
             Description:
             <input
               value={this.state.description}
@@ -173,7 +226,10 @@ class SellerForm extends Component {
               type="text"
               name="description"
               placeholder=" Made of cotton"
+              class="input is-large"
             />
+            </div>
+            </div>
           </label>
           <label htmlFor="">
             Image:
@@ -185,6 +241,7 @@ class SellerForm extends Component {
               type="file"
               // name="image"
               // placeholder=""
+              // class="input is-large"
             />
           </label>
           <img src={this.state.image} alt="" />
@@ -209,9 +266,13 @@ class SellerForm extends Component {
               placeholder="Yes"
             />
           </label> */}
-          <button>Submit your application</button>
-          <button>Add your product</button>
+          {submitapp}
+          
         </form>
+        </div>
+        </div>
+        </div>
+        </div>
       </section>
     );
   }

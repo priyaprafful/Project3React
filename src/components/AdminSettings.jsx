@@ -54,11 +54,15 @@ class AdminSettings extends Component {
         <h1>Admin Settings</h1>
         {users.map(oneUser => {
           return (
-            <ul>
+    
+  //           <div class="modal">
+  // <div class="modal-background"></div>
+  // <div class="modal-card">
+            <ul class="modal-card-body">
               <li key={oneUser._id}>
-                <h1>{oneUser.fullName}</h1>
-                <p>{oneUser.role}</p>
-                <p>{oneUser.email}</p>
+                <h1>Full Name : {oneUser.fullName}</h1>
+                <p>Role : {oneUser.role}</p>
+                <p>Email :{oneUser.email}</p>
                 <button
                   onClick={() => {
                     this.changeRole("admin", oneUser._id);
@@ -73,8 +77,12 @@ class AdminSettings extends Component {
                 >
                   Set Seller
                 </button>
+              
               </li>
+            
             </ul>
+            // </div>
+            // </div>
           );
         })}
       </section>

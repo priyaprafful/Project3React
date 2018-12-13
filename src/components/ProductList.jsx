@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import FilterProduct from "../components/FilterProduct.js";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
@@ -55,32 +54,45 @@ class ProductList extends Component {
 
   render() {
     const { filteredProducts } = this.props;
+
     console.log(this.props.shouldLogin)
+
     if(this.props.shouldLogin){
       return <Redirect to="/login-page"/>
     }
+
     return (
       <section>
-        <h1>Choose your product</h1>
-        <FilterProduct syncSelectCheckBox={this.props.syncSelectCheckBox} />
-        <button onClick={event => this.sortByPriceDsc(event)}>
-          lowest To highest price
-        </button>
-        <button onClick={event => this.sortByPriceAsc(event)}>
-          highest To lowest price
-        </button>
+        
+        <div class="field buttons is-grouped">
+            <p class="control">
+              <button class="button is-primary is-outlined" onClick={event => this.sortByPriceDsc(event)}>
+                Lowest To Highest Price
+              </button>
+             </p>
+       
+          <p class="control">
+            <button class="button is-primary is-outlined" onClick={event => this.sortByPriceAsc(event)}>
+              Highest To Lowest Price
+            </button>
+          </p>
+        </div>
+        
          <ul>
           {filteredProducts.map(oneProduct => {
             return (
-            
+          <div className="product-item">
+            <div className="gallery">
+              <div className="desc">
               <li key={oneProduct._id}>
                 <Link to={getPhoneUrl(oneProduct)}>
-                  <img src={oneProduct.image} alt={oneProduct.name} />
+                  <img className="img-products" src={oneProduct.image} alt={oneProduct.name} />
                 </Link>
                 <p> {oneProduct.price} Euro</p>
-                <p>{oneProduct.name}</p>
+                <p className="namep">{oneProduct.name}</p>
                 <p>{oneProduct.brand}</p>
                 <button
+                class="button is-warning is-hovered"
                  onClick={event => this.props.addToCart(
                                                 oneProduct._id,
                                                 oneProduct.name,
@@ -90,6 +102,9 @@ class ProductList extends Component {
                   Add to cart
                 </button>
               </li>
+              </div>
+            </div>
+          </div>
             );
           })}
         </ul>

@@ -45,13 +45,20 @@ class SignUpPage extends Component {
       );
     }
     return (
-      <section className="inner-container">
-        <div className="header">Sign Up</div>
+      <section class="hero has-background-light is-success is-fullheight" >
+      <div class="hero-body">
+            <div class="container has-text-centered">
+                <div class="column is-4 is-offset-4">
+        <h3 class="title has-text-grey" >Sign Up</h3>
+        <p class="subtitle has-text-grey">Please login to proceed.</p>
+
         <div className="box">
-          {/* <div className="input-group"> */}
+        
           <form onSubmit={event => this.handleSubmit(event)}>
-            <div className="input-group">
+            
               <label htmlFor="">
+              <div class="field">
+                   <div class="control">
                 Full Name:
                 <input
                   value={this.state.fullName}
@@ -59,12 +66,16 @@ class SignUpPage extends Component {
                   type="text"
                   name="fullName"
                   placeholder="Laura"
-                  className="login-input"
+                  className="input is-large"
                 />
+                </div>
+                </div>
               </label>
-            </div>
-            <div className="input-group">
+            
+            
               <label htmlFor="">
+              <div class="field">
+                 <div class="control">
                 Email:
                 <input
                   value={this.state.email}
@@ -72,12 +83,16 @@ class SignUpPage extends Component {
                   type="email"
                   name="email"
                   placeholder="example@example.com"
-                  className="login-input"
+                  className="input is-large"
                 />
+                </div>
+                </div>
               </label>
-            </div>
-            <div className="input-group">
+            
+            
               <label htmlFor="">
+              <div class="field">
+                  <div class="control">
                 Password:
                 <input
                   value={this.state.password}
@@ -85,16 +100,23 @@ class SignUpPage extends Component {
                   type="password"
                   name="originalPassword"
                   placeholder="*****"
-                  className="login-input"
+                  className="input is-large"
                 />
+                </div>
+                </div>
               </label>
-            </div>
-            <button className="login-btn">Sign Up</button>
+            
+            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
           </form>
+        </div>
+        </div>
+        </div>
         </div>
       </section>
     );
   }
 }
 
+                   
+                   
 export default SignUpPage;
