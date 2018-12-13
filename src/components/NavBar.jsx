@@ -33,7 +33,7 @@ class NavBar extends Component {
           Settings
         </NavLink>
       </React.Fragment>)
-    } else if (currentUser && currentUser.role === "seller"){
+    } else if (currentUser && currentUser.isVerified === "verified"){
       navLinks = <NavLink className="navbar-item" to="/see-products">
       See Products
     </NavLink>
