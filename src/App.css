@@ -68,7 +68,7 @@ width: 24.99999%; */
 .HomePage{
   display: flex;
   justify-content: space-between;
-  padding-top: 5%;
+  padding-top: 3%;
   margin:0 20% 
  
   
@@ -219,3 +219,35 @@ table {
   width: 268px;
   height: 386px;
 } 
+
+/* detail page */
+
+.globaldetail{
+  display:flex;
+  justify-content: space-evenly;
+  flex-wrap:wrap;
+  background-color: #f5f5f5
+}
+
+.imagedetail img{
+  width:550px;
+  height:650px;
+  border-style : solid;
+  padding:4%;
+}
+
+.detaildes{
+  margin-top:15%
+}
+
+.addcartbtn{
+  margin-top:1%
+}
+
+.seeproducts{
+ margin-top:3%}
+
+ h1{
+  font-size: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+ }

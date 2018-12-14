@@ -30,16 +30,29 @@ class AdminRefusedpage extends Component {
 
   render() {
     const { myProducts } = this.state;
-    console.log(myProducts)
+    console.log("----------------------------",myProducts)
     let productsRejected = myProducts.filter(oneProduct => {
-      return oneProduct.isVerified === "rejected"
+      return oneProduct.isVerified === "refused"
     })
 
     return (
       <section>
-        <h1>Refused Page</h1>
+        <h1 classname="title">Your Sellers</h1>
         {productsRejected.map(oneProduct => {
-          return (<div>oneProduct.name</div>)
+          return (
+            <section className="globaldetail seeproducts">
+            <div className="imagedetail">
+             <img src={oneProduct.image} alt={oneProduct.name} />
+             </div>
+             <div className="detaildes">
+
+             <h3>{oneProduct.name}</h3>
+             <p>
+               by<i>{oneProduct.brand}</i>
+             </p>
+           </div>
+           </section>
+          )
         })}
         <div></div>
       </section>

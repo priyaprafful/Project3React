@@ -12,13 +12,14 @@ class Search extends Component {
     return (
       <form className="Search">
         <label>
-          Search  
+          
           <input
             type="text"
             name="search"
             placeholder="Search your product"
             onChange={event => searchFunction(event)}
             value={value}
+            className="input is-info"
           />
         </label>
       </form>

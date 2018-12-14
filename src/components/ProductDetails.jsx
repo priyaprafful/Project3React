@@ -36,24 +36,32 @@ class ProductDetails extends Component {
     }
     return (
       <section className="ProductDetails">
-        <h3>Product Details</h3>
+        
+        <div className="globaldetail">
+          <div className="imagedetail">
         <img src={image} alt={name} />
-        <h3>{name}</h3>
-        <p>
-          by<i>{brand}</i>
-        </p>
-        <b>€{price}</b>
-        <h4>{size}</h4>
+        <div className="addcartbtn">
         <button
+        className="button is-warning is-hovered"
           onClick={event =>
             this.props.addToCart(_id, name, image, price, event)
           }
         >
           Add to cart
         </button>
-        <p>{description}</p>
+        </div>
+          </div>
 
-        <h2>people may also like</h2>
+         <div className="detaildes">
+        <h3>{name}</h3>
+        <p>
+          by <i>{brand}</i>
+        </p>
+        <b>€{price}</b>
+        <h4>{size}</h4>
+        <p>{description}</p>
+         </div>
+        </div>
       </section>
     );
   }

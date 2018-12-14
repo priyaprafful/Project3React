@@ -75,8 +75,9 @@ class NavBar extends Component {
               className="navbar-item" to="/seller-form" >
                 Add Products
               </NavLink>
-              {navLinks}
               {seeproductlink}
+              {navLinks}
+              
             
       
             </div>

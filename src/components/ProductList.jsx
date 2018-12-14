@@ -94,7 +94,7 @@ class ProductList extends Component {
                 <p className="namep">{oneProduct.name}</p>
                 <p>{oneProduct.brand}</p>
                 <button
-                class="button is-warning is-hovered"
+                className="button is-warning is-hovered"
                  onClick={event => this.props.addToCart(
                                                 oneProduct._id,
                                                 oneProduct.name,

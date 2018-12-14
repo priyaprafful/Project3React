@@ -6,7 +6,9 @@ import axios from "axios";
 class SeeProducts extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      myProduct : []
+    };
   }
   componentDidMount() {
 
@@ -16,7 +18,7 @@ class SeeProducts extends Component {
       })
       .then(response => {
         console.log("Product Details", response.data);
-        this.setState(response.data);
+        this.setState({myProduct : response.data});
       })
       .catch(err => {
         console.log("Phone Details", err);
@@ -24,14 +26,19 @@ class SeeProducts extends Component {
       });
   }
   render() {
-    const obj = this.state;
-    const newArr = Object.values(obj);
+    const {myProduct} = this.state;
+    
+    // const newArr = Object.values(obj);
     console.log("----", this.props);
-    const productList = newArr.map(el => {
+    console.log(myProduct)
+    const productList = myProduct.map(el => {
       return (
-        <div>
-          <h1>{el.name}</h1>
+        <section className="globaldetail seeproducts">
+         <div className="imagedetail">
           <img src={el.image} alt={el.name} />
+          </div>
+          <div className="detaildes">
+          <h1>{el.name}</h1>
           <h3>{el.name}</h3>
           <p>
             by<i>{el.brand}</i>
@@ -40,10 +47,15 @@ class SeeProducts extends Component {
           <h4>{el.size}</h4>
           <p>{el.description}</p>
         </div>
+        </section>
+        
+
+       
       );
     });
     return (
       <section>
+        { productList }
         {this.props.accepted && { productList }}
         {!this.props.productCheck.accepted &&
           !this.props.productCheck.rejected && <PendingPage />}
@@ -52,5 +64,7 @@ class SeeProducts extends Component {
     );
   }
 }
+
+
 
 export default SeeProducts;
