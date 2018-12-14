@@ -22,7 +22,7 @@ class SignUpPage extends Component {
         withCredentials: true
       })
       .then(response => {
-        console.log("Sign Up Page", response.data);
+        //console.log("Sign Up Page", response.data);
         const { userDoc } = response.data;
         this.props.onUserChange(userDoc);
       })
@@ -45,20 +45,20 @@ class SignUpPage extends Component {
       );
     }
     return (
-      <section class="hero has-background-light is-success is-fullheight" >
-      <div class="hero-body">
-            <div class="container has-text-centered">
-                <div class="column is-4 is-offset-4">
-        <h3 class="title has-text-grey" >Sign Up</h3>
-        <p class="subtitle has-text-grey">Please login to proceed.</p>
+      <section className="hero has-background-light is-success is-fullheight" >
+      <div className="hero-body">
+            <div className="container has-text-centered">
+                <div className="column is-4 is-offset-4">
+        <h3 className="title has-text-grey" >Sign Up</h3>
+        <p className="subtitle has-text-grey">Please login to proceed.</p>
 
         <div className="box">
         
           <form onSubmit={event => this.handleSubmit(event)}>
             
               <label htmlFor="">
-              <div class="field">
-                   <div class="control">
+              <div className="field">
+                   <div className="control">
                 Full Name:
                 <input
                   value={this.state.fullName}
@@ -74,8 +74,8 @@ class SignUpPage extends Component {
             
             
               <label htmlFor="">
-              <div class="field">
-                 <div class="control">
+              <div className="field">
+                 <div className="control">
                 Email:
                 <input
                   value={this.state.email}
@@ -91,8 +91,8 @@ class SignUpPage extends Component {
             
             
               <label htmlFor="">
-              <div class="field">
-                  <div class="control">
+              <div className="field">
+                  <div className="control">
                 Password:
                 <input
                   value={this.state.password}
@@ -106,7 +106,7 @@ class SignUpPage extends Component {
                 </div>
               </label>
             
-            <button class="button is-block is-info is-large is-fullwidth">Sign Up</button>
+            <button className="button is-block is-info is-large is-fullwidth">Sign Up</button>
           </form>
         </div>
         </div>

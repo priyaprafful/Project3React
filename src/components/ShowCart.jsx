@@ -42,7 +42,7 @@ class ShowCart extends Component {
       
     render() { 
         const {productData,cartTotal} = this.props;
-        console.log("this is my product data",productData)
+        //console.log("this is my product data",productData)
         return ( 
             <section className="MyCart">
                 <h1><b>Shopping Basket</b></h1>

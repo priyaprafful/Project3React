@@ -7,7 +7,7 @@ class Search extends Component {
   }
 
   render() {
-    console.log(this.state);
+    //console.log(this.state);
     const { searchFunction, value } = this.props;
     return (
       <form className="Search">

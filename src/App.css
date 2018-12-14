@@ -219,3 +219,68 @@ table {
   width: 268px;
   height: 386px;
 } 
+
+.go-to-home-button{
+background-color: #23d160;
+border-color: transparent;
+color: #fff;
+margin-top: 2%;
+padding: 1%;
+border-radius: 20px;
+font-size: 1.5em;
+}
+.AdminSettingpg{
+  margin: 50px 50px;;
+  
+}
+.adminbtn{
+  margin-right:10px;
+  margin-top: 10px;
+}
+.sellerbtn{
+  margin-left:10px;
+  margin-top: 10px;
+}
+.AdminSettingpg h1{
+  font-size:40px;
+}
+.AdminSettingpgone h1{
+  font-size:40px;
+}
+.AdminSettingpgone{
+  margin: 50px 50px;
+}
+.companyPage h1{
+  font-size:30px
+}
+.companyPage p{
+  font-size:25px
+}
+.companydetailpg h1{
+  font-size:30px
+}
+.globalcmpntdetail{
+  display:flex;
+  justify-content: space-evenly;
+  
+  
+}
+
+.globalcmpntdetailimg img{
+margin-left:15%;
+margin-top:5%;
+}
+.globalcmpntdetaildes{
+margin-right: 2%;
+margin-top: 5%;
+}
+.Rejectbtn{
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 10px;
+}
+.Acceptbtn{
+   margin-right: 0px;
+   margin-top: 10px;
+   padding: 5px;
+}

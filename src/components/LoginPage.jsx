@@ -37,24 +37,24 @@ class LoginPage extends Component {
     }
     return (
       <section className="hero has-background-light is-success is-fullheight">
-       <div class="hero-body">
-        <div class="container has-text-centered">
-        <div class="column is-4 is-offset-4">
+       <div className="hero-body">
+        <div className="container has-text-centered">
+        <div className="column is-4 is-offset-4">
         <h3 className="title has-text-grey">Login</h3>
-        <p class="subtitle has-text-grey">Please login to proceed.</p>
+        <p className="subtitle has-text-grey">Please login to proceed.</p>
         <div className="box">
           <form onSubmit={event => this.handleSumbit(event)}>
             <div className="input-group">
               <label htmlFor="">
-              <div class="field">
-                    <div class="control">
+              <div className="field">
+                    <div className="control">
                 Email:
                 <input
                   value={this.state.email}
                   onChange={event => this.genericSync(event)}
                   type="email"
                   name="email"
-                  class="input is-large"  placeholder="Your Email" autofocus=""
+                  className="input is-large"  placeholder="Your Email" autoFocus=""
                 />
                     </div>
                 </div>
@@ -62,15 +62,15 @@ class LoginPage extends Component {
             </div>
             <div className="input-group">
               <label htmlFor="">
-              <div class="field">
-                        <div class="control">
+              <div className="field">
+                        <div className="control">
                 Password:
                 <input
                   value={this.state.originalPassword}
                   onChange={event => this.genericSync(event)}
                   type="password"
                   name="originalPassword"
-                  class="input is-large" placeholder="Your Password"
+                  className="input is-large" placeholder="Your Password"
                 />
                 </div>
                 </div>

@@ -35,10 +35,10 @@ class AdminListPage extends Component {
   }
   render() {
     const { adminlist } = this.state;
-    console.log(adminlist);
-    console.log(this.state.adminlist);
+   // console.log(adminlist);
+    //console.log(this.state.adminlist);
     return (
-      <section>
+      <section className="companyPage">
         <h1>Admin Page</h1>
         {this.state.adminlist.map(oneProduct => {
           return (
