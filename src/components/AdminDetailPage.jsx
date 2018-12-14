@@ -99,19 +99,44 @@ class AdminDetailPage extends Component {
     }
 
     return (
-      <section>
+      <section className="companydetailpg">
         <h1>Company Detail Page </h1>
-
-        <h3>{name}</h3>
-        <p>
-          by<i>{brand}</i>
-        </p>
-        <b>€{price}</b>
-        <h4>{size}</h4>
-        <p>{description}</p>
+        <div className="globalcmpntdetail">
+          
+        
+        <div className="globalcmpntdetailimg img">
+     
         <img src={image} alt={name} />
-        <button onClick={() => this.acceptbutton()}>Accept</button>
-        <button onClick={() => this.rejectbutton()}>Reject</button>
+        
+        </div>
+        
+       
+        
+       
+       <div className="globalcmpntdetaildes">
+       
+        <h3><b>Name: </b> {name}</h3>
+        <p>
+          by <i>  {brand}</i>
+        </p><b>Price:</b>
+        <b> €{price}</b>
+        <h4><b>Size:</b> {size}</h4>
+        <p><b>Description:</b> {description}</p>
+        
+        </div>
+     
+        </div>
+        <div>
+       
+         
+       <button className=" button is-primary Acceptbtn is-medium" onClick={() => this.acceptbutton()}>Accept</button>
+       <button className=" button is-danger Rejectbtn  is-medium" onClick={() => this.rejectbutton()}>Reject</button>
+       
+       </div>
+          
+        
+      
+      
       </section>
     );
   }

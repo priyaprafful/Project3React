@@ -50,27 +50,26 @@ class AdminSettings extends Component {
   render() {
     const { users } = this.state;
     return (
-      <section>
+      <section className="AdminSettingpg">
         <h1>Admin Settings</h1>
         {users.map(oneUser => {
           return (
     
-  //           <div class="modal">
-  // <div class="modal-background"></div>
-  // <div class="modal-card">
-            <ul class="modal-card-body">
-              <li key={oneUser._id}>
-                <h1>Full Name : {oneUser.fullName}</h1>
-                <p>Role : {oneUser.role}</p>
-                <p>Email :{oneUser.email}</p>
-                <button
+
+            
+            <div className="AdminSettingpgone">
+              <div key={oneUser._id}>
+                <h1><b>Full Name:</b>  {oneUser.fullName}</h1>
+                <h4><b>Role :</b> {oneUser.role}</h4>
+                <h4><b>Email :</b>{oneUser.email}</h4>
+                <button className="button is-primary adminbtn"
                   onClick={() => {
                     this.changeRole("admin", oneUser._id);
                   }}
                 >
                   Set Admin
                 </button>
-                <button
+                <button className="button is-success sellerbtn"
                   onClick={() => {
                     this.changeRole("seller", oneUser._id);
                   }}
@@ -78,11 +77,11 @@ class AdminSettings extends Component {
                   Set Seller
                 </button>
               
-              </li>
+              </div>
             
-            </ul>
-            // </div>
-            // </div>
+            </div>
+            
+            
           );
         })}
       </section>

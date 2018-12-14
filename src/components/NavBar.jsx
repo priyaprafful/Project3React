@@ -8,12 +8,12 @@ class NavBar extends Component {
   }
 
   render() {
-    console.log(this.props.currentUser);
+    //console.log(this.props.currentUser);
     const { loggedInUser } = this.state;
     const {currentUser} = this.props;
     //const newArr = Object.values(currentUser);
 
-    console.log("-----", loggedInUser);
+    //console.log("-----", loggedInUser);
 
     let navLinks;
 
@@ -71,7 +71,7 @@ class NavBar extends Component {
               </NavLink>
                       
               <NavLink 
-               shouldLogin={this.props.shouldLogin}     
+              //  shouldLogin={this.props.shouldLogin}     
               className="navbar-item" to="/seller-form" >
                 Add Products
               </NavLink>

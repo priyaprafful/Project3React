@@ -57,7 +57,7 @@ class ProductList extends Component {
   render() {
     const { filteredProducts } = this.props;
 
-    console.log(this.props.shouldLogin)
+    //console.log(this.props.shouldLogin)
 
     if(this.props.shouldLogin){
       return <Redirect to="/login-page"/>
@@ -66,15 +66,15 @@ class ProductList extends Component {
     return (
       <section>
         
-        <div class="field buttons is-grouped">
-            <p class="control">
-              <button class="button is-primary is-outlined" onClick={event => this.sortByPriceDsc(event)}>
+        <div className="field buttons is-grouped">
+            <p className="control">
+              <button className="button is-primary is-outlined" onClick={event => this.sortByPriceDsc(event)}>
                 Lowest To Highest Price
               </button>
              </p>
        
-          <p class="control">
-            <button class="button is-primary is-outlined" onClick={event => this.sortByPriceAsc(event)}>
+          <p className="control">
+            <button className="button is-primary is-outlined" onClick={event => this.sortByPriceAsc(event)}>
               Highest To Lowest Price
             </button>
           </p>

@@ -11,7 +11,7 @@ class ProductDetails extends Component {
 
   componentDidMount() {
     const { params } = this.props.match;
-    console.log("inside mount");
+    //console.log("inside mount");
     axios
       .get(
         process.env.REACT_APP_SERVER_URL + `/api/products/${params.productId}`,
@@ -20,7 +20,7 @@ class ProductDetails extends Component {
         }
       )
       .then(response => {
-        console.log("Product Details", response.data);
+        //console.log("Product Details", response.data);
         this.setState(response.data);
       })
       .catch(err => {
